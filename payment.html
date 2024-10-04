@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Method</title>
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #87ceeb;
+            padding: 20px;
+
+        }
+        .payment-form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            max-width: 500px;
+            margin: 0 auto;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .payment-form h2 {
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group select {
+            width: 95%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        .form-group input[type="radio"] {
+            margin-right: 10px;
+        }
+        .form-group button {
+            background-color: #28a745;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="payment-form">
+    <h2>Choose Payment Method</h2>
+    <section id="payment-form" style="display: none;">
+    <form action="/submit-payment" method="POST">
+        <div class="form-group">
+            <label for="payment-method">Payment Method:</label>
+            <input type="radio" name="payment-method" value="credit-card" id="credit-card" checked> Credit Card<br>
+            <input type="radio" name="payment-method" value="paypal" id="paypal"> PayPal<br>
+            <input type="radio" name="payment-method" value="bank-transfer" id="bank-transfer"> Bank Transfer<br>
+        </div>
+
+        <div class="form-group">
+            <label for="name">Name on Card:</label>
+            <input type="text" id="name" name="name">
+        </div>
+
+        <div class="form-group">
+            <label for="card-number">Card Number:</label>
+            <input type="number" id="card-number" name="card-number">
+        </div>
+
+        <div class="form-group">
+            <label for="expiry-date">Expiry Date:</label>
+            <input type="text" id="expiry-date" name="expiry-date" placeholder="MM/YY">
+        </div>
+
+        <div class="form-group">
+            <label for="cvv">CVV:</label>
+            <input type="number" id="cvv" name="cvv">
+        </div>
+
+        <div class="form-group">
+            <button type="submit">Submit Payment</button>
+        </div>
+    </form>
+</div>
+</section>
+
+</body>
+</html>

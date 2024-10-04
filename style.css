@@ -1,0 +1,366 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+}
+
+header nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+header nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+section {
+    padding: 20px;
+    text-align: center;
+}
+
+.car-listing {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.car1 {
+    border: 1px solid rgb(10, 10, 10);
+    margin: 10px;
+    padding: 10px;
+    width: 200px;
+}
+.car1 img {
+    width: 100%;
+}
+.car2 {
+    border: 1px solid rgb(10, 10, 10);
+    margin: 10px;
+    padding: 10px;
+    width: 200px;
+}
+.car2 img {
+    width: 100%;
+}
+.car3 {
+    border: 1px solid rgb(15, 15, 15);
+    margin: 10px;
+    padding: 10px;
+    width: 200px;
+}
+.car3 img {
+    width: 100%;
+}
+.car4 {
+    border: 1px solid rgb(10, 10, 10);
+    margin: 10px;
+    padding: 10px;
+    width: 200px;
+}
+.car4 img {
+    width: 100%;
+}
+.car5 {
+    border: 1px solid rgb(22, 21, 21);
+    margin: 10px;
+    padding: 10px;
+    width: 200px;
+}
+.car5 img {
+    width: 100%;
+}
+.car6
+ {
+    border: 1px solid rgb(15, 15, 15);
+    margin: 10px;
+    padding: 10px;
+    width: 200px;
+}
+.car6 img {
+    width: 100%;
+}
+
+.car7
+ {
+    border: 1px solid rgb(15, 15, 15);
+    margin: 10px;
+    padding: 10px;
+    width: 200px;
+}
+.car7 img {
+    width: 100%;
+}
+
+.car8
+ {
+    border: 1px solid rgb(15, 15, 15);
+    margin: 10px;
+    padding: 10px;
+    width: 200px;
+}
+.car8 img {
+    width: 100%;
+}
+
+.car9
+ {
+    border: 1px solid rgb(15, 15, 15);
+    margin: 10px;
+    padding: 10px;
+    width: 200px;
+}
+.car9 img {
+    width: 100%;
+}
+
+.car10
+ {
+    border: 1px solid rgb(15, 15, 15);
+    margin: 10px;
+    padding: 10px;
+    width: 200px;
+}
+.car10 img {
+    width: 100%;
+}
+.car11
+ {
+    border: 1px solid rgb(15, 15, 15);
+    margin: 10px;
+    padding: 10px;
+    width: 200px;
+}
+.car11 img {
+    width: 100%;
+}
+.car12
+ {
+    border: 1px solid rgb(15, 15, 15);
+    margin: 10px;
+    padding: 10px;
+    width: 200px;
+}
+.car12 img {
+    width: 100%;
+}
+
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 4px 0;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+}
+label{
+
+    top: 1000px;
+    color: aqua;
+   position: absolute;
+   text-align: center;
+   left: 150px;
+    
+}
+
+.car1{
+    position: absolute;
+    right:1110px;
+    top: 100px;
+    transition: 1s;
+}
+
+.car2{
+    position: absolute;
+    right:1110px;
+    left: 600px;
+    top: 100px;
+    transition: 1s;
+    
+}
+
+.car3{
+    position: absolute;
+    right:1110px;
+    top: 450px;
+    transition: 1s;
+}
+
+.car4{
+    position: absolute;
+    right:1110px;
+    top: 750px;
+    transition: 1s;
+}
+
+.car5{
+    position: absolute;
+    right:1110px;
+    top: 1060px;
+    transition: 1s;
+}
+
+.car6{
+    position: absolute;
+    right:1110px;
+    left: 600px;
+    top: 450px;
+    transition: 1s;
+}
+
+.car7{
+    position: absolute;
+    right:1110px;
+    left: 600px;
+    top: 750px;
+    transition: 1s;
+}
+
+.car8{
+    position: absolute;
+    right:1110px;
+    left: 600px;
+    top: 1065px;
+    transition: 1s;
+}
+
+.car9{
+    position: absolute;
+    right:1110px;
+    left: 1000px;
+    top: 450px;
+    transition: 1s;
+}
+
+.car10{
+    position: absolute;
+    right:1110px;
+    left: 1000px;
+    top: 100px;
+    transition: 1s;
+}
+
+.car11{
+    position: absolute;
+    right:1110px;
+    left: 1000px;
+    top: 1050px;
+    transition: 1s;
+}
+
+.car12{
+    position: absolute;
+    right:1110px;
+    left: 1000px;
+    top: 755px;
+    transition: 1s;
+
+}
+
+
+
+.car01 {
+    border: 1px solid rgb(10, 10, 10);
+    margin: 10px;
+    padding: 10px;
+    width: 200px;
+    transition: 1s;
+    position: absolute;
+    right:800px;
+    top: 300px;
+}
+.car01 img {
+    width: 100%;
+}
+.car01:hover{
+    transform:scale(1.1);
+    z-index:2;
+}
+
+.car02{
+    border: 1px solid rgb(10, 10, 10);
+    margin: 10px;
+    padding: 10px;
+    width: 200px;
+    transition: 1s;
+    position: absolute;
+    right: 500px;
+    top: 300px;
+}
+.car02 img {
+    width: 100%;
+}
+.car02:hover{
+    transform:scale(1.1);
+    z-index:2;
+}
+
+
+
+
+
+.car1:hover{
+    transform:scale(1.1);
+    z-index:2;
+}
+.car2:hover{
+    transform:scale(1.1);
+    z-index:2;
+}
+.car3:hover{
+    transform:scale(1.1);
+    z-index:2;
+}
+.car4:hover{
+    transform:scale(1.1);
+    z-index:2;
+}
+.car5:hover{
+    transform:scale(1.1);
+    z-index:2;
+}
+.car6:hover{
+    transform:scale(1.1);
+    z-index:2;
+}
+.car7:hover{
+    transform:scale(1.1);
+    z-index:2;
+}
+.car8:hover{
+    transform:scale(1.1);
+    z-index:2;
+}
+.car9:hover{
+    transform:scale(1.1);
+    z-index:2;
+}
+.car10:hover{
+    transform:scale(1.1);
+    z-index:2;
+}
+.car11:hover{
+    transform:scale(1.1);
+    z-index:2;
+}
+.car12:hover{
+    transform:scale(1.1);
+    z-index:2;
+}
+
+
