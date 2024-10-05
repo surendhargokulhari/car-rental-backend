@@ -11,7 +11,7 @@ document.getElementById('form').addEventListener('submit', function(event) {
     document.getElementById('booking-form').reset();
     document.getElementById('booking-form').style.display = 'none';
     document.getElementById('cars').style.display = 'block';
-});
+})
 
 
 
