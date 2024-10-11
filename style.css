@@ -39,7 +39,7 @@ section {
 }
 
 .car1 {
-    border: 1px solid rgb(10, 10, 10);
+    border: 1px solid rgb(241, 236, 236);
     margin: 10px;
     padding: 10px;
     width: 200px;
@@ -48,7 +48,7 @@ section {
     width: 100%;
 }
 .car2 {
-    border: 1px solid rgb(10, 10, 10);
+    border: 1px solid rgb(248, 245, 245);
     margin: 10px;
     padding: 10px;
     width: 200px;
@@ -57,7 +57,7 @@ section {
     width: 100%;
 }
 .car3 {
-    border: 1px solid rgb(15, 15, 15);
+    border: 1px solid rgb(249, 245, 245);
     margin: 10px;
     padding: 10px;
     width: 200px;
@@ -66,7 +66,7 @@ section {
     width: 100%;
 }
 .car4 {
-    border: 1px solid rgb(10, 10, 10);
+    border: 1px solid rgb(241, 237, 237);
     margin: 10px;
     padding: 10px;
     width: 200px;
@@ -75,7 +75,7 @@ section {
     width: 100%;
 }
 .car5 {
-    border: 1px solid rgb(22, 21, 21);
+    border: 1px solid rgb(241, 239, 239);
     margin: 10px;
     padding: 10px;
     width: 200px;
@@ -85,7 +85,7 @@ section {
 }
 .car6
  {
-    border: 1px solid rgb(15, 15, 15);
+    border: 1px solid rgb(251, 249, 249);
     margin: 10px;
     padding: 10px;
     width: 200px;
@@ -96,7 +96,7 @@ section {
 
 .car7
  {
-    border: 1px solid rgb(15, 15, 15);
+    border: 1px solid rgb(246, 242, 242);
     margin: 10px;
     padding: 10px;
     width: 200px;
@@ -107,7 +107,7 @@ section {
 
 .car8
  {
-    border: 1px solid rgb(15, 15, 15);
+    border: 1px solid rgb(244, 240, 240);
     margin: 10px;
     padding: 10px;
     width: 200px;
@@ -118,7 +118,7 @@ section {
 
 .car9
  {
-    border: 1px solid rgb(15, 15, 15);
+    border: 1px solid rgb(246, 243, 243);
     margin: 10px;
     padding: 10px;
     width: 200px;
@@ -129,7 +129,7 @@ section {
 
 .car10
  {
-    border: 1px solid rgb(15, 15, 15);
+    border: 1px solid rgb(250, 246, 246);
     margin: 10px;
     padding: 10px;
     width: 200px;
@@ -139,7 +139,7 @@ section {
 }
 .car11
  {
-    border: 1px solid rgb(15, 15, 15);
+    border: 1px solid rgb(244, 240, 240);
     margin: 10px;
     padding: 10px;
     width: 200px;
@@ -149,7 +149,7 @@ section {
 }
 .car12
  {
-    border: 1px solid rgb(15, 15, 15);
+    border: 1px solid rgb(246, 243, 243);
     margin: 10px;
     padding: 10px;
     width: 200px;
@@ -183,6 +183,7 @@ label{
     right:1110px;
     top: 100px;
     transition: 1s;
+    color: #fff;
 }
 
 .car2{
@@ -191,6 +192,7 @@ label{
     left: 600px;
     top: 100px;
     transition: 1s;
+    color: #fff;
     
 }
 
@@ -199,6 +201,7 @@ label{
     right:1110px;
     top: 450px;
     transition: 1s;
+    color: #fff;
 }
 
 .car4{
@@ -206,6 +209,7 @@ label{
     right:1110px;
     top: 750px;
     transition: 1s;
+    color: #fff;
 }
 
 .car5{
@@ -213,6 +217,7 @@ label{
     right:1110px;
     top: 1060px;
     transition: 1s;
+    color: #fff;
 }
 
 .car6{
@@ -221,6 +226,7 @@ label{
     left: 600px;
     top: 450px;
     transition: 1s;
+    color: #fff;
 }
 
 .car7{
@@ -229,6 +235,7 @@ label{
     left: 600px;
     top: 750px;
     transition: 1s;
+    color: #fff;
 }
 
 .car8{
@@ -237,6 +244,7 @@ label{
     left: 600px;
     top: 1065px;
     transition: 1s;
+    color: #fff;
 }
 
 .car9{
@@ -245,6 +253,7 @@ label{
     left: 1000px;
     top: 450px;
     transition: 1s;
+    color: #fff;
 }
 
 .car10{
@@ -253,6 +262,7 @@ label{
     left: 1000px;
     top: 100px;
     transition: 1s;
+    color: #fff;
 }
 
 .car11{
@@ -261,6 +271,7 @@ label{
     left: 1000px;
     top: 1050px;
     transition: 1s;
+    color: #fff;
 }
 
 .car12{
@@ -269,13 +280,14 @@ label{
     left: 1000px;
     top: 755px;
     transition: 1s;
+    color: #fff;
 
 }
 
 
 
 .car01 {
-    border: 1px solid rgb(10, 10, 10);
+    border: 1px solid rgb(244, 242, 242);
     margin: 10px;
     padding: 10px;
     width: 200px;
@@ -283,6 +295,7 @@ label{
     position: absolute;
     right:800px;
     top: 300px;
+    color: #fff;
 }
 .car01 img {
     width: 100%;
@@ -293,7 +306,7 @@ label{
 }
 
 .car02{
-    border: 1px solid rgb(10, 10, 10);
+    border: 1px solid rgb(243, 242, 242);
     margin: 10px;
     padding: 10px;
     width: 200px;
@@ -301,6 +314,8 @@ label{
     position: absolute;
     right: 500px;
     top: 300px;
+    color: #fff;
+
 }
 .car02 img {
     width: 100%;
@@ -361,6 +376,20 @@ label{
 .car12:hover{
     transform:scale(1.1);
     z-index:2;
+}
+
+
+/* Set the background image for the body */
+body {
+    background-image: url('https://cdn.pixabay.com/photo/2024/01/17/12/06/car-8514314_640.png');
+    background-size: cover;      /* Scale the background image to cover the entire page */
+    background-position: center; /* Center the image */
+    background-repeat: repeat; /* Prevent the image from repeating */
+    height: 100vh;               /* Make sure the body takes the full height of the viewport */
+    margin: 0;                   /* Remove default margin */
+    font-family: Arial, sans-serif; /* Optional: set a default font */
+    color: white;                /* Optional: text color */
+    
 }
 
 
