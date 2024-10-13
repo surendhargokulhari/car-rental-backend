@@ -1,165 +1,84 @@
-
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Car Rental Login</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Car Rental</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="login-container">
-        <div class="car-logo">
-        </div>
-        <h2>Car Rental Login</h2>
-        <form id="loginForm">
-            <div class="input-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" placeholder="Enter your email" required>
-            </div>
-            <div class="input-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" placeholder="Enter your password" required>
-            </div>
-            <button type="submit">Login</button>
-            <p class="forgot-password">Forgot password?</p>
-        </form>
-    </div>
+    <!-- Header -->
+    <header>
+        <h1>Car Rental Service</h1>
+        <nav>
+            <ul>
+                <li><a href="http://127.0.0.1:5501/index.html">Home</a></li>
+                <li><a href="car.html" >Cars</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <script src="scripts.js"></script>
-</body>
-</html>
-
-<style>
-  /* Global Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
-}
-
-body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background: linear-gradient(135deg, #1d2b64, #f8cdda);
-    color: #fff;
-}
-
-.login-container {
-    background-color: rgba(0, 0, 0, 0.8);
-    padding: 2rem;
-    border-radius: 10px;
-    width: 350px;
-    text-align: center;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-    animation: fadeIn 1s ease-in-out;
-}
-
-.car-logo img {
-    width: 50px;
-    margin-bottom: 1rem;
-}
-
-h2 {
-    margin-bottom: 1.5rem;
-    font-size: 1.5rem;
-}
-
-.input-group {
-    margin-bottom: 1rem;
-    text-align: left;
-}
-
-label {
-    display: block;
-    margin-bottom: 0.3rem;
-}
-
-input {
-    width: 100%;
-    padding: 0.5rem;
-    border-radius: 5px;
-    border: none;
-    font-size: 1rem;
-}
-
-button {
-    width: 100%;
-    padding: 0.7rem;
-    background-color: #e84545;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-    color: white;
-    transition: background-color 0.3s;
-}
-
-button:hover {
-    background-color: #d73838;
-}
-
-.forgot-password {
-    margin-top: 1rem;
-    font-size: 0.9rem;
-    cursor: pointer;
-    color: #f0a500;
-}
-
-.forgot-password:hover {
-    text-decoration: underline;
-}
-
-/* Animations */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Set the background image for the body */
-body {
-    background-image: url('https://i.pinimg.com/originals/1b/b2/31/1bb231185e93f1050ba1e54b24f80933.jpg');
-    background-size: cover;      /* Scale the background image to cover the entire page */
-    background-position: center; /* Center the image */
-    background-repeat: repeat; /* Prevent the image from repeating */
-    height: 100vh;               /* Make sure the body takes the full height of the viewport */
-    margin: 0;                   /* Remove default margin */
-    font-family: Arial, sans-serif; /* Optional: set a default font */
-    color: white;                /* Optional: text color */
     
-}
-</style>
+    <!-- Home Section -->
+    <section id="home">
+        <h2>Welcome to Our Car Rental Service</h2>
+        <p>Choose from a wide variety of cars available for rent at affordable prices.</p>
+    </section>
+    
+    <!-- Cars Section -->
+    <section id="cars">
+        <div class="car-listing">
+            <div class="car01">
+                <img src="https://images3.alphacoders.com/250/250769.jpg"  alt="Car 1">
+                <h3>BMW</h3>
+                <p>Price: ₹5000/day</p>
+                <br>
+                <button onclick="bookCar('Bmw model')">Book Now</button>
+            </div>
+           
+            <div class="car02">
+                <img src="https://imgd.aeplcdn.com/1200x900/cw/cars/discontinued/renault/duster-2012-2015.jpg?q=80" alt="Car 2">
+                <h3>duster</h3>
+                <p>Price: ₹6000/day</p>
+               <br> <button onclick="bookCar('honda city')">Book Now</button>
+            </div>
+        
+            <!-- Add more cars as needed -->
+        </div>
+    </section>
 
-<script>
-  document.getElementById("loginForm").addEventListener("submit", function(event) {
-    event.preventDefault();
 
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+    <!-- Booking Form -->
+    <section id="booking-form" style="display: none;">
+        <h2>Book Your Car</h2>
+        <form id="form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" placeholder="enter your name" name="name" required>
 
-    if (validateEmail(email) && validatePassword(password)) {
-        // Redirect to the dashboard or another page
-        window.location.href = "index.html"; // Replace with the URL of your target page
-    } else {
-        alert("Invalid email or password. Please try again.");
-    }
-});
+            <label for="email">Email:</label>
+            <input type="email" placeholder="enter your email" id="email" name="email" required>
 
-function validateEmail(email) {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
-}
+            <label for="car-model">Car Model:</label>
+            <input type="text" id="car-model" name="car-model" readonly>
 
-function validatePassword(password) {
-    return password.length >= 6;
-}
-</script>
+            <label for="start-date">Start Date:</label>
+            <input type="date" id="start-date" name="start-date" required>
+
+            <label for="end-date">End Date:</label>
+            <input type="date" id="end-date" name="end-date" required>
+
+            <button onclick="bookcar('payment-form')">submit</button>
+        </form>
+    </section>
+</body>
+
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Car Rental Service. All rights reserved.</p>
+    </footer>
+
+    <script src="index.js"></script>
+
+    
