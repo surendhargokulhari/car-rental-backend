@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Form</title>
+  <style>
+    /* General form styling */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    #paymentForm {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 300px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+      color: #555;
+    }
+
+    input[type="text"],
+    input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    input[type="text"]:focus {
+      border-color: #007bff;
+      outline: none;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+    input[type="submit"] {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+
+    /* Add some responsiveness */
+    @media (max-width: 600px) {
+      #paymentForm {
+        width: 100%;
+        margin: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <form id="paymentForm" onsubmit="processPayment(event)">
+    <h2>Enter Payment Details</h2>
+
+    <label for="cardNumber">Card Number:</label>
+    <input type="text" id="cardNumber" name="cardNumber" required>
+
+    <label for="expiryDate">Expiry Date:</label>
+    <input type="text" id="expiryDate" name="expiryDate" required>
+
+    <label for="cvv">CVV:</label>
+    <input type="text" id="cvv" name="cvv" required>
+
+    <input type="submit" value="Pay Now">
+  </form>
+
+  <script>
+    function processPayment(event) {
+      event.preventDefault(); // Prevent the default form submission
+
+      // Process payment logic here
+      // e.g., validate payment, send data to backend, etc.
+
+      alert("Payment successful!"); // Placeholder for successful payment response
+
+      // Reset the form
+      document.getElementById("paymentForm").reset();
+    }
+  </script>
+
+</body>
+</html>
