@@ -393,3 +393,17 @@ body {
 }
 
 
+
+/* Base styles for desktop */
+body {
+    font-size: 16px;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+}
+
+
