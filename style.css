@@ -1,3 +1,49 @@
+body{
+    margin: 0;
+    overflow-y: hidden;
+    max-height: 100vh;
+    overflow-y: auto;
+
+}
+
+
+form{
+    flex-direction: column;
+    display: flex;
+    gap: 10px;
+    padding: 20px;
+    border-radius: 10px;
+    background: skyblue;
+   
+    
+
+}
+.form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: white;
+    height: 100vh;
+   
+    
+
+}
+input[type="text"]
+input[type="email"]
+input[type="date"]{
+    padding: 1000px;
+    width: 300px;
+    border: none;
+    border-radius: 5px;
+}
+button{
+    background-color: #4ca050;
+    color: white;
+    cursor: pointer;
+}
+button:hover{
+    background-color: #4ca049;
+}
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -5,7 +51,7 @@ body {
 }
 
 header {
-    background-color: #333;
+    background-color: #a2a0a0;
     color: #fff;
     padding: 10px 0;
     text-align: center;
@@ -170,8 +216,8 @@ footer {
 }
 label{
 
-    top: 1000px;
-    color: aqua;
+   top: 1000px;
+   color: aqua;
    position: absolute;
    text-align: center;
    left: 150px;
@@ -181,7 +227,7 @@ label{
 .car1{
     position: absolute;
     right:1110px;
-    top: 100px;
+    top: 115px;
     transition: 1s;
     color: #fff;
 }
@@ -190,7 +236,7 @@ label{
     position: absolute;
     right:1110px;
     left: 600px;
-    top: 100px;
+    top: 115px;
     transition: 1s;
     color: #fff;
     
@@ -260,7 +306,7 @@ label{
     position: absolute;
     right:1110px;
     left: 1000px;
-    top: 100px;
+    top: 115px;
     transition: 1s;
     color: #fff;
 }
