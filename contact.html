@@ -3,7 +3,7 @@
  <body style="background-color: skyblue;">
 
  
- <section class="contact section" id="contact">
+ <section class="contact section" >
     <h2 class="section-title">Contact</h2>
 
     <div class="contact__container bd-grid">
@@ -18,7 +18,7 @@
             <span class="contact__text">coimbatore</span>
         </div>
 
-        <form action="" class="contact__form">
+        <form action="" class="contact__form" onsubmit="processPayment(event)">
             <div class="contact__inputs">
                 <input type="text" placeholder="Name" class="contact__input" required>
                 <input type="mail" placeholder="Email" class="contact__input" required>
@@ -80,3 +80,18 @@
 
 
 </style>
+
+<script>
+function processPayment(event) {
+      event.preventDefault(); // Prevent the default form submission
+
+      // Process payment logic here
+      // e.g., validate payment, send data to backend, etc.
+
+      alert("submit successfully"); // Placeholder for successful payment response
+
+      // Reset the form
+      document.getElementById("contact__inputs").reset();
+    }
+
+</script>
