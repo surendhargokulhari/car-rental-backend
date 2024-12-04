@@ -143,7 +143,7 @@ body {
     event.preventDefault();
 
     const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+    const password = document.getElementById("password").reset().value;
 
     if (validateEmail(email) && validatePassword(password)) {
         // Redirect to the dashboard or another page
