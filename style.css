@@ -455,24 +455,6 @@ body {
 
 
 
-/* Ensure proper scaling for all devices */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  
-  /* Make images responsive */
-  img {
-    max-width: 100%;
-    height: auto;
-  }
-  
-  /* Default styles for larger screens (Desktop) */
-  .container {
-    width: 80%;
-    margin: auto;
-  }
   
   /* Mobile-friendly styles */
   @media screen and (max-width: 768px) {
