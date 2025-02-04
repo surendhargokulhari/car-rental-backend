@@ -8,15 +8,15 @@ body{
 
 
 form{
-    flex-direction: column;
-    display: flex;
+    flex-direction:column;
+    display:flex;
     gap: 10px;
     padding: 20px;
     border-radius: 10px;
     background: skyblue;
-   
-    
-
+    width: 500px;
+    position: absolute;
+    left: 500px;
 }
 .form{
     display: flex;
@@ -31,7 +31,7 @@ form{
 input[type="text"]
 input[type="email"]
 input[type="date"]{
-    padding: 1000px;
+    padding: 100px;
     width: 300px;
     border: none;
     border-radius: 5px;
