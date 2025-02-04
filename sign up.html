@@ -3,26 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Car Rental Login</title>
+    <title>Car Rental sign up</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="login-container">
         <div class="car-logo">
         </div>
-        <h2>Car Rental Login</h2>
-        <form id="loginForm">
+        <h2>Car Rental Sign up</h2>
+        <form id="sigupForm">
+            <div class="input-group">
+                <label for="name">First Name</label>
+                <input type="text" id="text" placeholder="Enter your FirstName" required>
+            </div>
+            <div class="input-group">
+                <label for="text">Last Name</label>
+                <input type="text" id="text" placeholder="Enter your LastName" required>
+            </div>
             <div class="input-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" placeholder="Enter your email" required>
+                <input type="email" id="text" placeholder="Enter your Email" required>
             </div>
             <div class="input-group">
                 <label for="password">Password</label>
                 <input type="password" id="password" placeholder="Enter your password" required>
             </div>
-            <button type="submit">Login</button>
-            <p >Have not Account- <a href="http://127.0.0.1:5501/sign%20up.html" >sign up</a></p>
-            <p class="forgot-password">Forgot password?</p>
+            <button type="submit">sign up</button>
+  
         </form>
     </div>
 
@@ -69,7 +76,7 @@ h2 {
 }
 
 .input-group {
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     text-align: left;
 }
 
@@ -140,9 +147,10 @@ body {
 </style>
 
 <script>
-  document.getElementById("loginForm").addEventListener("submit", function(event) {
+  document.getElementById("sigupForm").addEventListener("submit", function(event) {
     event.preventDefault();
 
+    const name = document.getElementById("text").value;
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
