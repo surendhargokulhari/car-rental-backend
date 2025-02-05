@@ -11,26 +11,17 @@
     <header>
         <h1>Car Rental Service</h1>
         <nav>
-            <ul>
-                <li><a href="https://surendhargokulhari.github.io/car-rental/index..html">Home</a></li>
-                <li><a href="car.html" >Cars</a></li>
-                <li><a href="http://127.0.0.1:5501/about.html">About</a></li>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="car.html">Cars</a></li>
+                <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="signup.html">Sign Up</a></li>
             </ul>
+            <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
         </nav>
     </header>
-
-    <div class="nav1">
-    <header>
-        <nav>
-            <ul>
-                <li><a href="http://127.0.0.1:5501/login.html">login</a></li>
-                <li><a href="http://127.0.0.1:5501/sign%20up.html">signup</a></li>
-            </ul>
-        </nav>
-    </header>
-</div>
-
     
     <!-- Home Section -->
     <section id="home">
@@ -39,108 +30,107 @@
     </section>
     
     <!-- Cars Section -->
-    <section id="cars">
-        <div class="car-listing">
-            <div class="car01">
-                <img src="https://images3.alphacoders.com/250/250769.jpg"  alt="Car 1">
-                <h3>BMW</h3>
-                <p>Price: ₹6000/day</p>
-                <br>
-                <button onclick="bookCar('Bmw model')">Book Now</button>
-            </div>
-           
-            <div class="car02">
-                <img src="https://imgd.aeplcdn.com/1200x900/cw/cars/discontinued/renault/duster-2012-2015.jpg?q=80" alt="Car 2">
-                <h3>duster</h3>
-                <p>Price: ₹4500/day</p>
-               <br> <button onclick="bookCar('honda city')">Book Now</button>
-            </div>
-        
-            <!-- Add more cars as needed -->
+    <section id="cars" class="car-container">
+        <div class="car-card">
+            <img src="https://images3.alphacoders.com/250/250769.jpg" alt="BMW">
+            <h3>BMW</h3>
+            <p>Price: ₹6000/day</p>
+            <button>Book Now</button>
+        </div>
+        <div class="car-card">
+            <img src="https://imgd.aeplcdn.com/1200x900/cw/cars/discontinued/renault/duster-2012-2015.jpg" alt="Duster">
+            <h3>Duster</h3>
+            <p>Price: ₹4500/day</p>
+            <button>Book Now</button>
         </div>
     </section>
-
-
-    <!-- Booking Form -->
-    <section id="booking-form" style="display: none;">
-        <h2>Book Your Car</h2>
-        <form id="form">
-            <label for="name">Name:</label>
-            <input type="text" id="name" placeholder="enter your name" name="name" required>
-
-            <label for="email">Email:</label>
-            <input type="email" placeholder="enter your email" id="email" name="email" required>
-
-            <label for="car-model">Car Model:</label>
-            <input type="text" id="car-model" name="car-model" readonly>
-
-            <label for="start-date">Start Date:</label>
-            <input type="date" id="start-date" name="start-date" required>
-
-            <label for="end-date">End Date:</label>
-            <input type="date" id="end-date" name="end-date" required>
-
-            <button onclick="bookcar('payment-form')">submit</button>
-            <style>
-                form{
-    flex-direction:column;
-    display:flex;
-    gap: 10px;
-    padding: 20px;
-    border-radius: 10px;
-    background: skyblue;
-    width: 500px;
-    position: absolute;
-    left: 500px;
-  
-}
-.form{
-    display: flex;
-    flex-direction:row;
-    justify-content: center;
-    color: white;
-    height: 100vh;
-
-}
-            </style>
-        </form>
-    </section>
-</body>
-
-
+    
     <!-- Footer -->
     <footer>
         <p>&copy; 2024 Car Rental Service. All rights reserved.</p>
     </footer>
-
-    <script src="index.js"></script>
-
-
-   
- <style>
-    body{
-       
-    margin: 0;
-    overflow-y: hidden;
-   
-
-}
-
-.nav1{
-
-    position: absolute;
-    left: 1380px;
-    top: 80px;
-}
-
-.nav1 ul li a {
-    background-color: rgb(0, 0, 11);
-    border: red;
-    border-radius: 3px;
-    color: rgb(247, 246, 249);
-}
-
-
-
     
- </style>
+    <script>
+        function toggleMenu() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        }
+    </script>
+    
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: #333;
+            color: white;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            background: #555;
+        }
+
+        .menu-icon {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .car-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .car-card {
+            background: #f4f4f4;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            width: 300px;
+        }
+
+        img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .menu-icon {
+                display: block;
+            }
+            
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                background: #333;
+                position: absolute;
+                width: 100%;
+                top: 60px;
+                left: 0;
+                padding: 20px;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+        }
+    </style>
+</body>
+</html>
