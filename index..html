@@ -1,132 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Car Rental</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <!-- Header -->
     <header>
-        <h1>Car Rental Service</h1>
-        <nav>
-            <ul>
-                <li><a href="https://surendhargokulhari.github.io/car-rental/index..html">Home</a></li>
-                <li><a href="car.html" >Cars</a></li>
-                <li><a href="http://127.0.0.1:5501/about.html">About</a></li>
-                <li><a href="contact.html">Contact Us</a></li>
-            </ul>
-        </nav>
+      <h1>Car Rental Service</h1>
+      <nav>
+        <ul>
+          <li>
+            <a
+              href="https://surendhargokulhari.github.io/car-rental/index..html"
+              >Home</a
+            >
+          </li>
+          <li><a href="car.html">Cars</a></li>
+          <li><a href="http://127.0.0.1:5501/about.html">About</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </nav>
     </header>
 
     <div class="nav1">
-    <header>
+      <header>
         <nav>
-            <ul>
-                <li><a href="http://127.0.0.1:5501/login.html">login</a></li>
-                <li><a href="http://127.0.0.1:5501/sign%20up.html">signup</a></li>
-            </ul>
+          <ul>
+            <li><a href="http://127.0.0.1:5501/login.html">login</a></li>
+            <li><a href="http://127.0.0.1:5501/sign%20up.html">signup</a></li>
+          </ul>
         </nav>
-    </header>
-</div>
+      </header>
+    </div>
 
-    
     <!-- Home Section -->
     <section id="home">
-        <h2>Welcome to Our Car Rental Service</h2>
-        <p>Choose from a wide variety of cars available for rent at affordable prices.</p>
+      <h2>Welcome to Our Car Rental Service</h2>
+      <p>
+        Choose from a wide variety of cars available for rent at affordable
+        prices.
+      </p>
     </section>
-    
+
     <!-- Cars Section -->
     <section id="cars">
-        <div class="car-listing">
-            <div class="car01">
-                <img src="https://images3.alphacoders.com/250/250769.jpg"  alt="Car 1">
-                <h3>BMW</h3>
-                <p>Price: ₹6000/day</p>
-                <br>
-                <button onclick="bookCar('Bmw model')">Book Now</button>
-            </div>
-           
-            <div class="car02">
-                <img src="https://imgd.aeplcdn.com/1200x900/cw/cars/discontinued/renault/duster-2012-2015.jpg?q=80" alt="Car 2">
-                <h3>duster</h3>
-                <p>Price: ₹4500/day</p>
-               <br> <button onclick="bookCar('honda city')">Book Now</button>
-            </div>
-        
-            <!-- Add more cars as needed -->
+      <div class="car-listing">
+        <div class="car01">
+          <img
+            src="https://images3.alphacoders.com/250/250769.jpg"
+            alt="Car 1"
+          />
+          <h3>BMW</h3>
+          <p>Price: ₹6000/day</p>
+          <br />
+          <button onclick="bookCar('Bmw model')">Book Now</button>
         </div>
-    </section>
 
+        <div class="car02">
+          <img
+            src="https://imgd.aeplcdn.com/1200x900/cw/cars/discontinued/renault/duster-2012-2015.jpg?q=80"
+            alt="Car 2"
+          />
+          <h3>duster</h3>
+          <p>Price: ₹4500/day</p>
+          <br />
+          <button onclick="bookCar('honda city')">Book Now</button>
+        </div>
+
+        <!-- Add more cars as needed -->
+      </div>
+    </section>
 
     <!-- Booking Form -->
-    <section id="booking-form" style="display: none;">
-        <h2>Book Your Car</h2>
-        <form id="form">
-            <label for="name">Name:</label>
-            <input type="text" id="name" placeholder="enter your name" name="name" required>
+    <section id="booking-form" style="display: none">
+      <h2>Book Your Car</h2>
+      <form id="form">
+        <label for="name">Name:</label>
+        <input
+          type="text"
+          id="name"
+          placeholder="enter your name"
+          name="name"
+          required
+        />
 
-            <label for="email">Email:</label>
-            <input type="email" placeholder="enter your email" id="email" name="email" required>
+        <label for="email">Email:</label>
+        <input
+          type="email"
+          placeholder="enter your email"
+          id="email"
+          name="email"
+          required
+        />
 
-            <label for="car-model">Car Model:</label>
-            <input type="text" id="car-model" name="car-model" readonly>
+        <label for="car-model">Car Model:</label>
+        <input type="text" id="car-model" name="car-model" readonly />
 
-            <label for="start-date">Start Date:</label>
-            <input type="date" id="start-date" name="start-date" required>
+        <label for="start-date">Start Date:</label>
+        <input type="date" id="start-date" name="start-date" required />
 
-            <label for="end-date">End Date:</label>
-            <input type="date" id="end-date" name="end-date" required>
+        <label for="end-date">End Date:</label>
+        <input type="date" id="end-date" name="end-date" required />
 
-            <button onclick="bookcar('payment-form')">submit</button>
-            <style>
-                form{
-    flex-direction:column;
-    display:flex;
-    gap: 10px;
-    padding: 20px;
-    border-radius: 10px;
-    background: skyblue;
-    width: 500px;
-    position: absolute;
-    left: 500px;
-  
-}
-.form{
-    display: flex;
-    flex-direction:row;
-    justify-content: center;
-    color: white;
-    height: 100vh;
+        <button onclick="bookcar('payment-form')">submit</button>
+        <style>
+          form {
+            flex-direction: column;
+            display: flex;
+            gap: 10px;
+            padding: 20px;
+            border-radius: 10px;
+            background: skyblue;
+            width: 500px;
+            position: absolute;
+            left: 500px;
+          }
+          .form {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            color: white;
+            height: 100vh;
+          }
 
-}
+          body {
+            margin: 0;
+            overflow-y: hidden;
+          }
 
-body{
-       
-       margin: 0;
-       overflow-y: hidden;
-      
-   
-   }
-   
-   .nav1{
-   
-       position: absolute;
-       left: 1380px;
-       top: 80px;
-   }
+          .nav1 {
+            position: absolute;
+            left: 1380px;
+            top: 80px;
+          }
+          @media screen and (max-width: 750px) {
+            .header {
+              float: none;
+              display: block;
+              text-align: left;
+            }
 
-            </style>
-        </form>
+            .header-right {
+              float: none;
+            }
+            .cars {
+              float: right;
+              left: 50px;
+              right: 80px;
+            }
+          }
+        </style>
+      </form>
     </section>
-</body>
+  </body>
 
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2024 Car Rental Service. All rights reserved.</p>
+  </footer>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2024 Car Rental Service. All rights reserved.</p>
-    </footer>
-
-    <script src="index.js"></script>
+  <script src="index.js"></script>
+</html>

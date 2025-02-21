@@ -5,6 +5,7 @@ body{
     max-height: 100vh;
     overflow-y: auto;
 
+
 }
 
 
@@ -427,7 +428,7 @@ body {
     background-image: url('https://cdn.pixabay.com/video/2023/10/12/184734-873923034_tiny.jpg');
     background-size: cover;      /* Scale the background image to cover the entire page */
     background-position: center; /* Center the image */
-    background-repeat: repeat; /* Prevent the image from repeating */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
     height: 100vh;               /* Make sure the body takes the full height of the viewport */
     margin: 0;                   /* Remove default margin */
     font-family: Arial, sans-serif; /* Optional: set a default font */
