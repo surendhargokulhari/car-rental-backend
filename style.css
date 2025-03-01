@@ -90,6 +90,7 @@ section {
 }
 .car1 img {
     width: 100%;
+
 }
 .car2 {
     border: 1px solid rgb(248, 245, 245);
@@ -336,7 +337,7 @@ label{
     padding: 10px;
     width: 200px;
     transition: 1s;
-    position: absolute;
+   
     right:800px;
     top: 300px;
     color: #fff;
@@ -355,7 +356,7 @@ label{
     padding: 10px;
     width: 200px;
     transition: 1s;
-    position: absolute;
+ 
     right: 500px;
     top: 300px;
     color: #fff;
@@ -423,18 +424,19 @@ label{
 }
 
 
-/* Set the background image for the body */
+
 body {
     background-image: url('https://cdn.pixabay.com/video/2023/10/12/184734-873923034_tiny.jpg');
     background-size: cover;      /* Scale the background image to cover the entire page */
     background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Prevent the image from repeating */
+    background-repeat: repeat; /* Prevent the image from repeating */
     height: 100vh;               /* Make sure the body takes the full height of the viewport */
     margin: 0;                   /* Remove default margin */
     font-family: Arial, sans-serif; /* Optional: set a default font */
     color: white;                /* Optional: text color */
     
 }
+
 
 
 
