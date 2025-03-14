@@ -8,11 +8,14 @@ document.getElementById('booking-form').addEventListener('submit', function(even
     event.preventDefault();
     window.location.href = "payment.html";
     document.getElementById("booking-form").reset();
-   
-
 
 
 });
+
+document.getElementById("form").addEventListener("submit", function (event) {
+    event.preventDefault(); 
+    window.location.href = "car.html"; 
+  });
 
 
 

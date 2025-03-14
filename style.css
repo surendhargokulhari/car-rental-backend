@@ -4,28 +4,8 @@ body{
     overflow-y: hidden;
     max-height: 100vh;
     overflow-y: auto;
-
-
 }
 
-
-form{
-    flex-direction:column;
-    display:flex;
-    gap: 10px;
-    padding: 20px;
-    border-radius: 10px;
-    background: skyblue;
-   
-}
-.form{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    color: white;
-    height: 100vh;
-
-}
 input[type="text"]
 input[type="email"]
 input[type="date"]{
@@ -356,7 +336,7 @@ label{
     padding: 10px;
     width: 200px;
     transition: 1s;
- 
+
     right: 500px;
     top: 300px;
     color: #fff;
@@ -369,9 +349,6 @@ label{
     transform:scale(1.1);
     z-index:2;
 }
-
-
-
 
 
 .car1:hover{
