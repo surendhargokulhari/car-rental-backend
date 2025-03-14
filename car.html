@@ -10,10 +10,22 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         img {
-            width: 400px;
-            height: 250px;
             object-fit: cover;
+            margin: 10px;
+            padding: 10px;
+            width: 250px;
+            transition: 1s;
+            border: 2px solid black;
         }
+        img:hover{
+            transform:scale(1.1);
+            z-index:2;
+        }
+         #cars{
+            color: white;
+
+        }
+        
         .form-container {
             display: none;
             position: fixed;
@@ -25,13 +37,26 @@
             border-radius: 10px;
             width: 400px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin: 40px;
+            
         }
+        .form-container:hover{
+            background-image: url("https://media4.giphy.com/media/aPlntAgU2btacCz8l3/giphy.gif?cid=6c09b9526dzq4kvxxerdh9t2x3hrs6623da2fzam6s7liosa&ep=v1_internal_gif_by_id&rid=giphy.gif&ct=g");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            
+        }
+
         input {
         width: 100%;
         padding: 10px;
         margin: 10px 0;
         border: 1px solid #ccc;
         border-radius: 5px;
+      }
+    #car-model{
+        font-weight: bold;
       }
       nav ul li a.active {
       font-weight: bold;
@@ -64,7 +89,7 @@
     <section id="cars" class="container my-4">
         <div class="row">
             <div class="col-md-4 text-center">
-                <img src="inova.jpg" alt="Innova" class="img-fluid">
+                <img src="https://images.autox.com/uploads/2024/08/Toyota-Innova-Crysta-Attitude-Black-Mica.jpg" alt="Innova" class="img-fluid">
                 <h3>Innova</h3>
                 <p>Price: ₹5000/day</p>
                 <button onclick="bookCar('Innova')" class="btn btn-primary">Book Now</button>
@@ -76,19 +101,19 @@
                 <button onclick="bookCar('Swift')" class="btn btn-primary">Book Now</button>
             </div>
             <div class="col-md-4 text-center">
-                <img src="mimi cop.webp" alt="Mini Cooper" class="img-fluid">
+                <img src="https://i.pinimg.com/736x/6c/27/cb/6c27cb67c759270fc2189b12cb13285b.jpg" alt="Mini Cooper" class="img-fluid">
                 <h3>Mini Cooper</h3>
                 <p>Price: ₹4500/day</p>
                 <button onclick="bookCar('Mini Cooper')" class="btn btn-primary">Book Now</button>
             </div>
             <div class="col-md-4 text-center">
-                <img src="scorpy.webp" alt="Scorpio" class="img-fluid">
+                <img src="https://imgd.aeplcdn.com/370x208/n/cw/ec/128413/scorpio-exterior-right-front-three-quarter-47.jpeg?isig=0&q=80" alt="Scorpio" class="img-fluid">
                 <h3>Scorpio</h3>
                 <p>Price: ₹3500/day</p>
                 <button onclick="bookCar('Scorpio')" class="btn btn-primary">Book Now</button>
             </div>
             <div class="col-md-4 text-center">
-                <img src="thar.webp" alt="Thar" class="img-fluid">
+                <img src="https://wallpapers.com/images/hd/gray-black-mahindra-thar-2021-p7o1s7iv5ucfgv8c.jpg" alt="Thar" class="img-fluid">
                 <h3>Thar</h3>
                 <p>Price: ₹3500/day</p>
                 <button onclick="bookCar('Thar')" class="btn btn-primary">Book Now</button>
@@ -135,9 +160,9 @@
             <input type="email" id="email" name="email" placeholder="Enter your email" required class="form-control">
 
             <label for="car-model">Car Model:</label>
-            <input type="text" id="car-model" name="car-model" readonly class="form-control">
+            <input  type="text" id="car-model" name="car-model" readonly class="form-control">
 
-            <label for="number">Email:</label>
+            <label for="number">mobile Number:</label>
             <input type="number" id="two" placeholder="Enter your mobile number" name="phone" pattern="\d{10}" title="Enter a valid 10-digit phone number" required />
             
     
