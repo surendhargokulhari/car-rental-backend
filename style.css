@@ -61,6 +61,7 @@ body {
     margin: 0;                   /* Remove default margin */
     font-family: Arial, sans-serif; /* Optional: set a default font */
     color: white;                /* Optional: text color */
+    background-attachment: fixed;
     
 }
 
