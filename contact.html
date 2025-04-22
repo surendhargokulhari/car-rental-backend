@@ -19,7 +19,6 @@
         color: white;
         padding: 10px 20px;
         border: black;
-      
       }
       .container button:hover {
         background-color: darkgreen;
@@ -51,6 +50,10 @@
         text-decoration: underline;
         color: yellow;
       }
+      body {
+        background-color: #8bc6ec;
+        background-image: linear-gradient(135deg, #8bc6ec 0%, #9599e2 100%);
+      }
     </style>
   </head>
   <body>
@@ -67,7 +70,7 @@
         </ul>
       </nav>
     </header>
-   
+
     <div id="contactform"></div>
     <div class="container mt-5">
       <div class="row">
@@ -75,23 +78,53 @@
           <form onsubmit="return check(event)">
             <div class="mb-3">
               <label class="form-label">NAME: *</label>
-              <input type="text" class="form-control" id="name" placeholder="Enter your name" required />
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                placeholder="Enter your name"
+                required
+              />
             </div>
             <div class="mb-3">
               <label class="form-label">EMAIL: *</label>
-              <input type="email" class="form-control" id="email" placeholder="Enter your email" required />
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                placeholder="Enter your email"
+                required
+              />
             </div>
             <div class="mb-3">
               <label class="form-label">PHONE: *</label>
-              <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number" required />
+              <input
+                type="tel"
+                class="form-control"
+                id="phone"
+                placeholder="Enter your phone number"
+                required
+              />
             </div>
             <div class="mb-3">
               <label class="form-label">LOCATION: *</label>
-              <input type="text" class="form-control" id="location" placeholder="Enter your location" required />
+              <input
+                type="text"
+                class="form-control"
+                id="location"
+                placeholder="Enter your location"
+                required
+              />
             </div>
             <div class="mb-3">
               <label class="form-label">ADDRESS: *</label>
-              <input type="text" class="form-control" id="address" placeholder="Enter Your Address" required />
+              <input
+                type="text"
+                class="form-control"
+                id="address"
+                placeholder="Enter Your Address"
+                required
+              />
             </div>
             <button type="submit" class="btn btn-success">Send Message</button>
           </form>
@@ -116,7 +149,6 @@
         alert("Your message has been sent successfully!");
         return true;
       }
-
     </script>
   </body>
 </html>

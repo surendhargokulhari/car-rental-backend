@@ -1,120 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Payment Form</title>
     <style>
-        /* General Styling */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: skyblue;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(#eeaeca);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #8bc6ec;
+        background-image: linear-gradient(135deg, #8bc6ec 0%, #9599e2 100%);
+      }
 
+      #paymentForm {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 320px;
+      }
+
+      h2 {
+        text-align: center;
+        color: #333;
+      }
+
+      label {
+        display: block;
+        margin-top: 10px;
+        font-weight: bold;
+        color: #555;
+      }
+
+      input[type="text"],
+      input[type="month"],
+      input[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+      }
+
+      input:focus {
+        border-color: #007bff;
+        outline: none;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+      }
+
+      input[type="submit"] {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #0056b3;
+      }
+
+      /* Responsive Styling */
+      @media (max-width: 600px) {
         #paymentForm {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 320px;
+          width: 90%;
         }
-
-        h2 {
-            text-align: center;
-            color: #333;
-        }
-
-        label {
-            display: block;
-            margin-top: 10px;
-            font-weight: bold;
-            color: #555;
-        }
-
-        input[type="text"],
-        input[type="month"],
-        input[type="submit"] {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            box-sizing: border-box;
-        }
-
-        input:focus {
-            border-color: #007bff;
-            outline: none;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-        }
-
-        input[type="submit"] {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #0056b3;
-        }
-
-        /* Responsive Styling */
-        @media (max-width: 600px) {
-            #paymentForm {
-                width: 90%;
-            }
-        }
+      }
     </style>
-</head>
-<body>
-
+  </head>
+  <body>
     <form id="paymentForm" onsubmit="return processPayment(event)">
-        <h2>Enter Payment Details</h2>
+      <h2>Enter Payment Details</h2>
 
-        <label for="cardNumber">Card Number:</label>
-        <input type="text" id="cardNumber" name="cardNumber" maxlength="16" pattern="\d{16}" title="Enter a valid 16-digit card number" required />
+      <label for="cardNumber">Card Number:</label>
+      <input
+        type="text"
+        id="cardNumber"
+        name="cardNumber"
+        maxlength="16"
+        pattern="\d{16}"
+        title="Enter a valid 16-digit card number"
+        required
+      />
 
-        <label for="expiryDate">Expiry Date:</label>
-        <input type="month" id="expiryDate" name="expiryDate" required />
+      <label for="expiryDate">Expiry Date:</label>
+      <input type="month" id="expiryDate" name="expiryDate" required />
 
-        <label for="cvv">CVV:</label>
-        <input type="text" id="cvv" name="cvv" maxlength="4" pattern="\d{3,4}" title="Enter a valid 3 or 4-digit CVV" required />
+      <label for="cvv">CVV:</label>
+      <input
+        type="text"
+        id="cvv"
+        name="cvv"
+        maxlength="4"
+        pattern="\d{3,4}"
+        title="Enter a valid 3 or 4-digit CVV"
+        required
+      />
 
-        <input type="submit" value="Pay Now" />
+      <input type="submit" value="Pay Now" />
     </form>
 
     <script>
-        function processPayment(event) {
-            event.preventDefault();
+      function processPayment(event) {
+        event.preventDefault();
 
-            const cardNumber = document.getElementById("cardNumber").value.trim();
-            const expiryDate = document.getElementById("expiryDate").value;
-            const cvv = document.getElementById("cvv").value.trim();
+        const cardNumber = document.getElementById("cardNumber").value.trim();
+        const expiryDate = document.getElementById("expiryDate").value;
+        const cvv = document.getElementById("cvv").value.trim();
 
-            // Simple validation
-            if (!/^\d{16}$/.test(cardNumber)) {
-                alert("Please enter a valid 16-digit card number.");
-                return false;
-            }
-
-            if (!/^\d{3,4}$/.test(cvv)) {
-                alert("Please enter a valid 3 or 4-digit CVV.");
-                return false;
-            }
-
-            alert("Payment successful!");
-            document.getElementById("paymentForm").reset();
-            return true;
+        // Simple validation
+        if (!/^\d{16}$/.test(cardNumber)) {
+          alert("Please enter a valid 16-digit card number.");
+          return false;
         }
-    </script>
 
-</body>
+        if (!/^\d{3,4}$/.test(cvv)) {
+          alert("Please enter a valid 3 or 4-digit CVV.");
+          return false;
+        }
+
+        alert("Payment successful!");
+        document.getElementById("paymentForm").reset();
+        return true;
+      }
+    </script>
+  </body>
 </html>
