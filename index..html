@@ -4,10 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Go Wheels Car Rental Service</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+    
     <link
       rel="icon"
       href="https://i.pinimg.com/736x/af/2d/98/af2d9823b101c49c5ecf65ab30621a48.jpg"
@@ -26,9 +25,9 @@
         position: sticky;
         top: 0;
         z-index: 1000;
+        background-image: linear-gradient( 180.4deg,  rgba(0,6,10,1) 1%, rgba(1,190,237,1) 91.4% );
         animation: slideDown 0.5s ease-out;
         transition: background-color 0.3s ease, box-shadow 0.3s ease;
-         background-image: linear-gradient( 180.4deg,  rgba(0,6,10,1) 1%, rgba(1,190,237,1) 91.4% );
       }
   
       header.scrolled {
@@ -142,19 +141,39 @@
     </style>
   </head>
   <body>
-    <header class="text-white text-center py-3">
-      <h1 style="margin: 0; padding: 10px 0;">Go Wheels</h1>
-      <nav>
-        <ul>
-          <li><a href="#" class="active">Home</a></li>
-          <li><a href="car.html" target="_blank">Cars</a></li>
-          <li><a href="about.html" target="_blank">About</a></li>
-          <li><a href="contact.html" target="_blank">Contact Us</a></li>
-          <li><a href="login.html">Login</a></li>
-          <li><a href="sign up.html">Signup</a></li>
-        </ul>
-      </nav>
-    </header>
+
+  
+<header class="bg-dark text-white p-4">
+  <nav class="navbar navbar-expand-lg navbar-dark container">
+    <a class="navbar-brand" href="#">Go Wheels</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="car.html" target="_blank">Cars</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="about.html" target="_blank">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="contact.html" target="_blank">Contact Us</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="login.html">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="signup.html">Signup</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
 
     <div class="hero-container text-center text-light" id="hero">
       <h2 class="fw-bold">Self-Drive Car Rentals</h2>

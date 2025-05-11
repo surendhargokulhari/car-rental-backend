@@ -1,222 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contact Form</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="style.cs" />
-    <style>
- 
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Form</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f8f9fa;
+    }
 
-       /* GENERAL BODY STYLES */
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f8f9fa;
-  position: relative;
-}
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-image: linear-gradient(180.4deg, rgba(0,6,10,1) 1%, rgba(1,190,237,1) 91.4%);
+      animation: slideDown 0.5s ease-out;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
 
-/* HEADER STYLES */
-header {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
- background-image: linear-gradient( 180.4deg,  rgba(0,6,10,1) 1%, rgba(1,190,237,1) 91.4% );
-  animation: slideDown 0.5s ease-out;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
+    header.scrolled {
+      background-color: #333;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
 
-header.scrolled {
-  background-color: #333;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-}
+    @keyframes slideDown {
+      0% {
+        transform: translateY(-100%);
+      }
+      100% {
+        transform: translateY(0);
+      }
+    }
 
-/* KEYFRAMES FOR HEADER SLIDE */
-@keyframes slideDown {
-  0% {
-    transform: translateY(-100%);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
 
-/* NAVIGATION STYLES */
-nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
+    nav ul li a {
+      position: relative;
+      padding: 6px 12px;
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
 
-nav ul li a {
-  position: relative;
-  padding: 6px 12px;
-  color: white;
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
+    nav ul li a:hover {
+      color: #00ff7f;
+    }
 
-/* HOVER EFFECT */
-nav ul li a:hover {
-  color: #00ff7f; /* Neon green */
-}
+    nav ul li a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      width: 0%;
+      height: 2px;
+      background-color: #00ff7f;
+      transition: width 0.3s ease-in-out;
+    }
 
-/* UNDERLINE ANIMATION */
-nav ul li a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -2px;
-  width: 0%;
-  height: 2px;
-  background-color: #00ff7f;
-  transition: width 0.3s ease-in-out;
-}
+    nav ul li a:hover::after {
+      width: 100%;
+    }
 
-nav ul li a:hover::after {
-  width: 100%;
-}
+    nav ul li a.active {
+      color: yellow;
+      font-weight: bold;
+    }
 
-/* ACTIVE LINK STYLE */
-nav ul li a.active {
-  color: yellow;
-  font-weight: bold;
-}
+    nav ul li a.active::after {
+      width: 100%;
+      background-color: yellow;
+    }
 
-nav ul li a.active::after {
-  width: 100%;
-  background-color: yellow;
-}
+    @media (max-width: 768px) {
+      nav ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
 
-/* RESPONSIVE NAVIGATION */
-@media (max-width: 768px) {
-  nav ul {
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-  }
+      .form-container {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
 
-  .hero-container {
-    height: auto;
-    padding: 20px;
-  }
+  <!-- Header -->
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark container p-4">
+      <a class="navbar-brand" href="#">Contact Us</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-  .hero-container h2 {
-    font-size: 1.8rem;
-  }
-
-  .hero-container p {
-    font-size: 1rem;
-  }
-
-  .form-container {
-    width: 100%;
-  }
-}
-
-    </style>
-  </head>
-  <body>
-    <header class="text-white text-center py-3">
-      <h1>Contact Us</h1>
-      <nav>
-        <ul class="list-unstyled d-flex flex-wrap justify-content-center gap-3 mb-0">
-          <li><a href="index..html" class="text-white">Home</a></li>
-          <li><a href="car.html" target="_blank" class="text-white">Cars</a></li>
-          <li><a href="about.html" target="_blank" class="text-white">About</a></li>
-          <li><a href="#" target="_blank" class="active text-white">Contact Us</a></li>
-          <li><a href="login.html" class="text-white">Login</a></li>
-          <li><a href="signup.html" class="text-white">Signup</a></li>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="car.html" target="_blank">Cars</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html" target="_blank">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="contact.html" target="_blank">Contact Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="login.html">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="signup.html">Signup</a>
+          </li>
         </ul>
-      </nav>
-    </header>
+      </div>
+    </nav>
+  </header>
 
-    <div id="contactform"></div>
-    <div class="container mt-5">
-      <div class="row">
-        <div class="col-12">
-          <form onsubmit="return check(event)">
-            <div class="mb-3">
-              <label class="form-label">NAME: *</label>
-              <input
-                type="text"
-                class="form-control"
-                id="name"
-                placeholder="Enter your name"
-                required
-              />
-            </div>
-            <div class="mb-3">
-              <label class="form-label">EMAIL: *</label>
-              <input
-                type="email"
-                class="form-control"
-                id="email"
-                placeholder="Enter your email"
-                required
-              />
-            </div>
-            <div class="mb-3">
-              <label class="form-label">PHONE: *</label>
-              <input
-                type="tel"
-                class="form-control"
-                id="phone"
-                placeholder="Enter your phone number"
-                required
-              />
-            </div>
-            <div class="mb-3">
-              <label class="form-label">LOCATION: *</label>
-              <input
-                type="text"
-                class="form-control"
-                id="location"
-                placeholder="Enter your location"
-                required
-              />
-            </div>
-            <div class="mb-3">
-              <label class="form-label">ADDRESS: *</label>
-              <input
-                type="text"
-                class="form-control"
-                id="address"
-                placeholder="Enter Your Address"
-                required
-              />
-            </div>
-            <button type="submit" class="btn btn-success">Send Message</button>
-          </form>
+  <!-- Main Section -->
+  <main class="container mt-5">
+    <div class="row">
+      <div class="col-12">
+        <form id="contact-form" action="https://api.web3forms.com/submit" method="POST" onsubmit="return checkForm(event)">
+          <input type="hidden" name="access_key" value="a5e99171-32f2-4140-98b8-fda2eb2f93d7">
+
+          <div class="mb-3">
+            <label for="name" class="form-label">NAME: *</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">EMAIL: *</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+          </div>
+          <div class="mb-3">
+            <label for="phone" class="form-label">PHONE: *</label>
+            <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter your phone number" required>
+          </div>
+          <div class="mb-3">
+            <label for="location" class="form-label">LOCATION: *</label>
+            <input type="text" class="form-control" id="location" name="location" placeholder="Enter your location" required>
+          </div>
+          <div class="mb-3">
+            <label for="address" class="form-label">ADDRESS: *</label>
+            <input type="text" class="form-control" id="address" name="address" placeholder="Enter Your Address" required>
+          </div>
+
+          <button type="submit" class="btn btn-success">Send Message</button>
+        </form>
+
+        <!-- Popup Message -->
+        <div id="popup-message" style="display: none; margin-top: 20px; color: green; font-weight: bold;">
+          ✅ Your message has been sent successfully!
         </div>
       </div>
     </div>
+  </main>
+<script src="index.js"></script>
 
-    <script>
-      function check(event) {
-        event.preventDefault(); // Prevent default form submission
-        let name = document.getElementById("name").value.trim();
-        let email = document.getElementById("email").value.trim();
-        let phone = document.getElementById("phone").value.trim();
-        let location = document.getElementById("location").value.trim();
-        let address = document.getElementById("address").value.trim();
-
-        if (!name || !email || !phone || !location || !address) {
-          alert("Please fill in all required fields!");
-          return false;
-        }
-
-        alert("Your message has been sent successfully!");
-        return true;
-      }
-    </script>
-  </body>
+</body>
 </html>
