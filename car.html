@@ -221,18 +221,19 @@
 
   <!-- Scripts -->
   <script>
-    const cars = [
-      { name: "Innova", price: "₹5000/day", image: "https://images.autox.com/uploads/2024/08/Toyota-Innova-Crysta-Attitude-Black-Mica.jpg" },
-      { name: "Swift", price: "₹2500/day", image: "https://imgd.aeplcdn.com/664x374/n/cw/ec/54399/swift-exterior-right-front-three-quarter-64.jpeg?q=80" },
-      { name: "Mini Cooper", price: "₹4500/day", image: "https://i.pinimg.com/736x/6c/27/cb/6c27cb67c759270fc2189b12cb13285b.jpg" },
-      { name: "Scorpio", price: "₹3500/day", image: "https://imgd.aeplcdn.com/370x208/n/cw/ec/128413/scorpio-exterior-right-front-three-quarter-47.jpeg?isig=0&q=80" },
-      { name: "Thar", price: "₹3500/day", image: "https://wallpapers.com/images/hd/gray-black-mahindra-thar-2021-p7o1s7iv5ucfgv8c.jpg" },
-      { name: "Alto", price: "₹2000/day", image: "https://imgd.aeplcdn.com/1056x594/n/6gouesa_1463328.jpg?q=80" },
-      { name: "Volkswagen", price: "₹4500/day", image: "https://cdni.autocarindia.com/utils/ImageResizer.ashx?n=https://cms.haymarketindia.net/model/uploads/modelimages/Volkswagen-Virtus-220720221833.jpg" },
-      { name: "Toyota", price: "₹4000/day", image: "https://imgd-ct.aeplcdn.com/664x415/n/cw/ec/106275/rumion-right-front-three-quarter-3.jpeg?isig=0&q=80" },
-      { name: "Kia Seltos", price: "₹4000/day", image: "https://www.carandbike.com/_next/image?url=https%3A%2F%2Fimages.carandbike.com%2Fcar-images%2Fcolors%2Fkia%2Fseltos%2Fkia-seltos-aurora-black-pearl-tech.jpg%3Fv%3D1695270827&w=640&q=75" },
-      { name: "Honda City", price: "₹3500/day", image: "https://imgd.aeplcdn.com/664x374/n/cw/ec/45951/amaze-exterior-right-front-three-quarter-3.jpeg?isig=0&q=80" },
-    ];
+const cars = [
+  { name: "Innova", price: "₹5000/day", seater: "7-seater", fuel: "Diesel", image: "https://images.autox.com/uploads/2024/08/Toyota-Innova-Crysta-Attitude-Black-Mica.jpg" },
+  { name: "Swift", price: "₹2500/day", seater: "5-seater", fuel: "Petrol", image: "https://imgd.aeplcdn.com/664x374/n/cw/ec/54399/swift-exterior-right-front-three-quarter-64.jpeg?q=80" },
+  { name: "Mini Cooper", price: "₹4500/day", seater: "4-seater", fuel: "Petrol", image: "https://i.pinimg.com/736x/6c/27/cb/6c27cb67c759270fc2189b12cb13285b.jpg" },
+  { name: "Scorpio", price: "₹3500/day", seater: "7-seater", fuel: "Diesel", image: "https://imgd.aeplcdn.com/370x208/n/cw/ec/128413/scorpio-exterior-right-front-three-quarter-47.jpeg?isig=0&q=80" },
+  { name: "Thar", price: "₹3500/day", seater: "4-seater", fuel: "Diesel", image: "https://wallpapers.com/images/hd/gray-black-mahindra-thar-2021-p7o1s7iv5ucfgv8c.jpg" },
+  { name: "Alto", price: "₹2000/day", seater: "5-seater", fuel: "Petrol", image: "https://imgd.aeplcdn.com/1056x594/n/6gouesa_1463328.jpg?q=80" },
+  { name: "Volkswagen", price: "₹4500/day", seater: "5-seater", fuel: "Petrol", image: "https://cdni.autocarindia.com/utils/ImageResizer.ashx?n=https://cms.haymarketindia.net/model/uploads/modelimages/Volkswagen-Virtus-220720221833.jpg" },
+  { name: "Toyota", price: "₹4000/day", seater: "5-seater", fuel: "Petrol", image: "https://imgd-ct.aeplcdn.com/664x415/n/cw/ec/106275/rumion-right-front-three-quarter-3.jpeg?isig=0&q=80" },
+  { name: "Kia Seltos", price: "₹4000/day", seater: "5-seater", fuel: "Diesel", image: "https://www.carandbike.com/_next/image?url=https%3A%2F%2Fimages.carandbike.com%2Fcar-images%2Fcolors%2Fkia%2Fseltos%2Fkia-seltos-aurora-black-pearl-tech.jpg%3Fv%3D1695270827&w=640&q=75" },
+  { name: "Honda City", price: "₹3500/day", seater: "5-seater", fuel: "Petrol", image: "https://imgd.aeplcdn.com/664x374/n/cw/ec/45951/amaze-exterior-right-front-three-quarter-3.jpeg?isig=0&q=80" },
+];
+
   
     const carsContainer = document.getElementById("cars");
   
@@ -241,13 +242,16 @@
       carCard.classList.add("col-md-4");
   
       carCard.innerHTML = `
-        <div class="card text-center p-3">
-          <img src="${car.image}" alt="${car.name}" class="img-fluid mb-3">
-          <h4>${car.name}</h4>
-          <p>${car.price}</p>
-          <button onclick="openBookingForm('${car.name}')" class="btn btn-primary">Book Now</button>
-        </div>
-      `;
+  <div class="card text-center p-3">
+    <img src="${car.image}" alt="${car.name}" class="img-fluid mb-3">
+    <h4>${car.name}</h4>
+    <p>${car.price}</p>
+    <p><strong>Seater:</strong> ${car.seater}</p>
+    <p><strong>Fuel:</strong> ${car.fuel}</p>
+    <button onclick="openBookingForm('${car.name}')" class="btn btn-primary">Book Now</button>
+  </div>
+`;
+
       carsContainer.appendChild(carCard);
     });
   
