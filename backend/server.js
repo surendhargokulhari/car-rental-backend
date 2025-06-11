@@ -1,7 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const Booking = require('./models/Booking'); // <-- Your model
+const Booking = require('./models/Booking'); // Your Mongoose model
+
 const app = express();
 const PORT = 5000;
 
@@ -17,22 +18,31 @@ mongoose.connect('mongodb://127.0.0.1:27017/car_booking', {
 .then(() => console.log("✅ MongoDB connected"))
 .catch(err => console.error("❌ MongoDB connection error:", err));
 
-// POST booking
-// Example Express.js endpoint
-app.post("/api/book", (req, res) => {
+// POST booking route
+app.post("/api/book", async (req, res) => {
   const { name, email, carModel, phone } = req.body;
 
   if (!name || !email || !carModel || !phone) {
     return res.status(400).json({ message: "All fields are required" });
   }
 
-  // You can log to confirm:
-  console.log("Booking received:", req.body);
+  try {
+    const newBooking = new Booking({
+      name,
+      email,
+      carModel,
+      phone,
+      date: new Date()
+    });
 
-  // Simulate saving to DB
-  res.status(200).json({ message: "Booking successful!" });
+    await newBooking.save();
+
+    res.status(200).json({ message: "Booking successful!" });
+  } catch (error) {
+    console.error("❌ Booking save error:", error);
+    res.status(500).json({ message: "Failed to save booking", error });
+  }
 });
-
 
 // GET all bookings
 app.get('/api/bookings', async (req, res) => {
