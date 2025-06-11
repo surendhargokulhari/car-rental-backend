@@ -4,8 +4,7 @@ const bookingSchema = new mongoose.Schema({
   name: String,
   email: String,
   carModel: String,
-  phone: String,
-  date: { type: Date, default: Date.now }
-});
+  phone: String
+}, { timestamps: true });
 
 module.exports = mongoose.model('Booking', bookingSchema);
