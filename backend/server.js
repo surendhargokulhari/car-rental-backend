@@ -25,7 +25,7 @@ app.post('/api/book', async (req, res) => {
     await booking.save();
     res.status(200).json({ message: "Booking successful!", booking });
   } catch (error) {
-    res.status(500).json({ message: "Server error", error });
+    res.status(500).json({ message: "Server error ", error });
   }
 });
 
