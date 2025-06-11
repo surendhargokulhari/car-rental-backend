@@ -4,6 +4,7 @@
     "bootstrap": "^5.3.3",
     "cors": "^2.8.5",
     "express": "^5.1.0",
+    "mongodb": "^6.17.0",
     "mongoose": "^8.14.2"
   },
   "name": "car-rental",
