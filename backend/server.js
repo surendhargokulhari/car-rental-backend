@@ -18,16 +18,21 @@ mongoose.connect('mongodb://127.0.0.1:27017/car_booking', {
 .catch(err => console.error("❌ MongoDB connection error:", err));
 
 // POST booking
-app.post('/api/book', async (req, res) => {
-  try {
-    const { name, email, carModel, phone } = req.body;
-    const booking = new Booking({ name, email, carModel, phone });
-    await booking.save();
-    res.status(200).json({ message: "Booking successful!", booking });
-  } catch (error) {
-    res.status(500).json({ message: "Server error", error });
+// Example Express.js endpoint
+app.post("/api/book", (req, res) => {
+  const { name, email, carModel, phone } = req.body;
+
+  if (!name || !email || !carModel || !phone) {
+    return res.status(400).json({ message: "All fields are required" });
   }
+
+  // You can log to confirm:
+  console.log("Booking received:", req.body);
+
+  // Simulate saving to DB
+  res.status(200).json({ message: "Booking successful!" });
 });
+
 
 // GET all bookings
 app.get('/api/bookings', async (req, res) => {
