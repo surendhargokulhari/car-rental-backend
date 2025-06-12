@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-require('dotenv').config(); // Load environment variables from .env
+require('dotenv').config(); // Load .env variables
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -11,13 +11,21 @@ app.use(cors());
 app.use(express.json());
 
 // MongoDB Connection
-const mongoURI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/car_booking';
+const mongoURI = process.env.MONGO_URI;
+if (!mongoURI) {
+  console.error("❌ MONGO_URI not found in environment variables.");
+  process.exit(1); // Stop server if Mongo URI is missing
+}
+
 mongoose.connect(mongoURI, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
 })
-.then(() => console.log("✅ MongoDB connected successfully"))
-.catch(err => console.error("❌ MongoDB connection failed:", err));
+  .then(() => console.log("✅ MongoDB connected successfully"))
+  .catch(err => {
+    console.error("❌ MongoDB connection failed:", err);
+    process.exit(1); // Stop server on DB connection failure
+  });
 
 // Mongoose Schema & Model
 const bookingSchema = new mongoose.Schema({
@@ -30,11 +38,10 @@ const bookingSchema = new mongoose.Schema({
 
 const Booking = mongoose.model('Booking', bookingSchema);
 
-// POST: Save Booking
+// POST: Book a car
 app.post('/api/book', async (req, res) => {
   try {
     const { name, email, carModel, phone } = req.body;
-    console.log("📩 Booking received:", req.body);
 
     if (!name || !email || !carModel || !phone) {
       return res.status(400).json({ message: "All fields are required" });
@@ -49,7 +56,7 @@ app.post('/api/book', async (req, res) => {
   }
 });
 
-// GET: Fetch All Bookings
+// GET: All bookings
 app.get('/api/bookings', async (req, res) => {
   try {
     const bookings = await Booking.find().sort({ date: -1 });
@@ -60,7 +67,7 @@ app.get('/api/bookings', async (req, res) => {
   }
 });
 
-// Start server
+// Start the server
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
