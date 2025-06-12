@@ -1,7 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-require('dotenv').config(); // Load .env variables
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -10,29 +9,13 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// MongoDB URI handling
-let mongoURI = process.env.MONGO_URI;
-
-if (!mongoURI) {
-  if (process.env.NODE_ENV === "development") {
-    console.warn("⚠️ MONGO_URI not found, falling back to localhost for development");
-    mongoURI = 'mongodb://127.0.0.1:27017/car_booking';
-  } else {
-    console.error("❌ MONGO_URI not set. Aborting.");
-    process.exit(1);
-  }
-}
-
-// MongoDB Connection
-mongoose.connect(mongoURI, {
+// MongoDB Connection using environment variable
+mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
+  useUnifiedTopology: true
 })
-  .then(() => console.log("✅ MongoDB connected successfully"))
-  .catch(err => {
-    console.error("❌ MongoDB connection failed:", err);
-    process.exit(1); // Stop server on DB connection failure
-  });
+.then(() => console.log("✅ MongoDB connected successfully"))
+.catch(err => console.error("❌ MongoDB connection failed:", err));
 
 // Mongoose Schema & Model
 const bookingSchema = new mongoose.Schema({
@@ -49,6 +32,7 @@ const Booking = mongoose.model('Booking', bookingSchema);
 app.post('/api/book', async (req, res) => {
   try {
     const { name, email, carModel, phone } = req.body;
+    console.log("📥 Received booking data:", req.body);
 
     if (!name || !email || !carModel || !phone) {
       return res.status(400).json({ message: "All fields are required" });
@@ -56,6 +40,7 @@ app.post('/api/book', async (req, res) => {
 
     const booking = new Booking({ name, email, carModel, phone });
     await booking.save();
+
     res.status(200).json({ message: "Booking successful!", booking });
   } catch (error) {
     console.error("❌ Error in POST /api/book:", error);
@@ -76,5 +61,5 @@ app.get('/api/bookings', async (req, res) => {
 
 // Start the server
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`🚀 Server is running on port ${PORT}`);
 });
