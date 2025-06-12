@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+require('dotenv').config(); // To read .env variables
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -10,14 +11,14 @@ app.use(cors());
 app.use(express.json());
 
 // MongoDB Connection
-mongoose.connect('mongodb://127.0.0.1:27017/car_booking', {
+mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/car_booking', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
 .then(() => console.log("✅ MongoDB connected successfully"))
 .catch(err => console.error("❌ MongoDB connection failed:", err));
 
-// Mongoose Booking Model
+// Mongoose Booking Schema & Model
 const bookingSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true },
@@ -33,13 +34,13 @@ app.post('/api/book', async (req, res) => {
   try {
     const { name, email, carModel, phone } = req.body;
 
-    // Validation (basic)
     if (!name || !email || !carModel || !phone) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
     const booking = new Booking({ name, email, carModel, phone });
     await booking.save();
+
     res.status(200).json({ message: "Booking successful!", booking });
   } catch (error) {
     res.status(500).json({ message: "Server error", error });

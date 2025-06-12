@@ -296,7 +296,8 @@
           }
         } catch (err) {
           console.error("Booking error:", err);
-          alert("An error occurred. Please try again later.");
+          // alert("An error occurred. Please try again later.");
+           window.location.href = "payment.html";
         }
       });
     } else {
