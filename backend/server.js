@@ -10,13 +10,20 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// MongoDB Connection
-const mongoURI = process.env.MONGO_URI;
+// MongoDB URI handling
+let mongoURI = process.env.MONGO_URI;
+
 if (!mongoURI) {
-  console.error("❌ MONGO_URI not found in environment variables.");
-  process.exit(1); // Stop server if Mongo URI is missing
+  if (process.env.NODE_ENV === "development") {
+    console.warn("⚠️ MONGO_URI not found, falling back to localhost for development");
+    mongoURI = 'mongodb://127.0.0.1:27017/car_booking';
+  } else {
+    console.error("❌ MONGO_URI not set. Aborting.");
+    process.exit(1);
+  }
 }
 
+// MongoDB Connection
 mongoose.connect(mongoURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
