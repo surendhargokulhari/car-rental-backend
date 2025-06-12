@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+require('dotenv').config(); // Load environment variables
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -34,7 +35,8 @@ app.post('/api/book', async (req, res) => {
     const { name, email, carModel, phone } = req.body;
     console.log("📥 Received booking data:", req.body);
 
-    if (!name || !email || !carModel || !phone) {
+    // Validate inputs
+    if (!name?.trim() || !email?.trim() || !carModel?.trim() || !phone?.trim()) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
@@ -57,6 +59,11 @@ app.get('/api/bookings', async (req, res) => {
     console.error("❌ Error in GET /api/bookings:", error);
     res.status(500).json({ message: "Error fetching bookings", error });
   }
+});
+
+// Root route
+app.get('/', (req, res) => {
+  res.send('🚗 Car Rental Backend Running!');
 });
 
 // Start the server
