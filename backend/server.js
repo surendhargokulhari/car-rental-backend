@@ -33,6 +33,7 @@ const Booking = mongoose.model('Booking', bookingSchema);
 app.post('/api/book', async (req, res) => {
   try {
     const { name, email, carModel, phone } = req.body;
+    console.log("Received booking:", req.body); // Add this log
 
     if (!name || !email || !carModel || !phone) {
       return res.status(400).json({ message: "All fields are required" });
@@ -40,12 +41,13 @@ app.post('/api/book', async (req, res) => {
 
     const booking = new Booking({ name, email, carModel, phone });
     await booking.save();
-
     res.status(200).json({ message: "Booking successful!", booking });
   } catch (error) {
+    console.error("❌ Error in /api/book:", error);
     res.status(500).json({ message: "Server error", error });
   }
 });
+
 
 // GET all bookings - Retrieve all bookings from MongoDB
 app.get('/api/bookings', async (req, res) => {
