@@ -8,11 +8,14 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
+// ✅ CORS Fix: Allow Vercel Frontend
 app.use(cors({
-  origin: ['car-rental-three-rho.vercel.app'], // ✅ Correct frontend URL
+  origin: ['https://car-rental-three-rho.vercel.app'],
   methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type'],
   credentials: true
 }));
+
 app.use(express.json());
 
 // ✅ MongoDB Connection
