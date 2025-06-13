@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 5000;
 app.use(cors({
   origin: [
     "https://surendhargokulhari.github.io",  // ✅ allow GitHub Pages
-    "https://car-rental-three-rho.vercel.app" // ✅ allow Vercel frontend
+    "https://surendhargokulhari.github.io/car-rental-main/" // ✅ allow Vercel frontend
   ],
   methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type"]
