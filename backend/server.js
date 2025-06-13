@@ -8,14 +8,14 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
-  origin: ['https://car-rental-three-rho.vercel.app'], // Allow Vercel frontend
+  origin: ['https://github.com/surendhargokulhari/car-rental-main'], // Allow Vercel frontend
   methods: ['GET', 'POST'],
   credentials: true
 }));
 app.use(express.json());
 
 // MongoDB Connection
-mongoose.connect('mongodb+srv://root:<db_password>@cluster1.nbwi64w.mongodb.net/car_booking?retryWrites=true&w=majority&appName=Cluster1', {
+mongoose.connect('mongodb+srv://root:123@cluster1.nbwi64w.mongodb.net/car_booking?retryWrites=true&w=majority&appName=Cluster1', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
