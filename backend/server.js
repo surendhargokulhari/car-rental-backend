@@ -1,62 +1,54 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const Booking = require('./models/Booking'); // Make sure this path is correct
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: ['https://car-rental-three-rho.vercel.app'], // Allow Vercel frontend
+  methods: ['GET', 'POST'],
+  credentials: true
+}));
 app.use(express.json());
 
 // MongoDB Connection
-mongoose.connect('mongodb://127.0.0.1:27017/car_booking', {
+mongoose.connect('mongodb+srv://root:<db_password>@cluster1.nbwi64w.mongodb.net/car_booking?retryWrites=true&w=majority&appName=Cluster1', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
-.then(() => console.log("✅ MongoDB connected successfully"))
-.catch(err => console.error("❌ MongoDB connection failed:", err));
-
-// Mongoose Booking Model
-const bookingSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  email: { type: String, required: true },
-  carModel: { type: String, required: true },
-  phone: { type: String, required: true },
-  date: { type: Date, default: Date.now }
+.then(() => console.log('✅ MongoDB connected successfully'))
+.catch((err) => {
+  console.error('❌ MongoDB connection failed:', err.message);
 });
 
-const Booking = mongoose.model('Booking', bookingSchema);
+// Test route
+app.get('/', (req, res) => {
+  res.send('🚗 Car Rental Backend is running!');
+});
 
-// POST booking - Save booking to MongoDB
+// Booking API
 app.post('/api/book', async (req, res) => {
   try {
     const { name, email, carModel, phone } = req.body;
 
-    // Validation (basic)
     if (!name || !email || !carModel || !phone) {
-      return res.status(400).json({ message: "All fields are required" });
+      return res.status(400).json({ message: 'All fields are required' });
     }
 
-    const booking = new Booking({ name, email, carModel, phone });
-    await booking.save();
-    res.status(200).json({ message: "Booking successful!", booking });
+    const newBooking = new Booking({ name, email, carModel, phone });
+    await newBooking.save();
+
+    res.status(200).json({ message: 'Booking successful' });
   } catch (error) {
-    res.status(500).json({ message: "Server error", error });
+    console.error('❌ Booking error:', error.message);
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
 
-// GET all bookings - Retrieve all bookings from MongoDB
-app.get('/api/bookings', async (req, res) => {
-  try {
-    const bookings = await Booking.find().sort({ date: -1 });
-    res.status(200).json(bookings);
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching bookings", error });
-  }
-});
-
-// Start the server
+// Start server
 app.listen(PORT, () => {
-  console.log(`🚀 Server is running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
