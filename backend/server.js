@@ -2,34 +2,32 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const Booking = require('./models/Booking'); // Make sure this path is correct
+require('dotenv').config(); // Load .env variables
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
-  origin: ['https://surendhargokulhari.github.io/car-rental-main/'], // Allow Vercel frontend
+  origin: ['https://surendhargokulhari.github.io/car-rental-main/'], // ✅ Correct frontend URL
   methods: ['GET', 'POST'],
   credentials: true
 }));
 app.use(express.json());
 
-// MongoDB Connection
-mongoose.connect('mongodb+srv://root:123@cluster1.nbwi64w.mongodb.net/car_booking?retryWrites=true&w=majority&appName=Cluster1', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log('✅ MongoDB connected successfully'))
-.catch((err) => {
-  console.error('❌ MongoDB connection failed:', err.message);
-});
+// ✅ MongoDB Connection
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log('✅ MongoDB connected successfully'))
+  .catch((err) => {
+    console.error('❌ MongoDB connection failed:', err.message);
+  });
 
 // Test route
 app.get('/', (req, res) => {
   res.send('🚗 Car Rental Backend is running!');
 });
 
-// Booking API
+// ✅ Store booking
 app.post('/api/book', async (req, res) => {
   try {
     const { name, email, carModel, phone } = req.body;
@@ -45,6 +43,16 @@ app.post('/api/book', async (req, res) => {
   } catch (error) {
     console.error('❌ Booking error:', error.message);
     res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+// ✅ Optional: Get all bookings
+app.get('/api/bookings', async (req, res) => {
+  try {
+    const bookings = await Booking.find();
+    res.status(200).json(bookings);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching bookings' });
   }
 });
 
