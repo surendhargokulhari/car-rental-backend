@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
-  origin: ['https://github.com/surendhargokulhari/car-rental-main'], // Allow Vercel frontend
+  origin: ['https://surendhargokulhari.github.io/car-rental-main/'], // Allow Vercel frontend
   methods: ['GET', 'POST'],
   credentials: true
 }));
