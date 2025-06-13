@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 // ✅ CORS Fix: Allow Vercel Frontend
 app.use(cors({
-  origin: ['https://car-rental-three-rho.vercel.app'],
+  origin: ['https://surendhargokulhari.github.io/car-rental-main/'],
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type'],
   credentials: true
