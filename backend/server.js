@@ -60,6 +60,7 @@ app.post('/api/book', async (req, res) => {
         <p><strong>Phone:</strong> ${phone}</p>
         <p><strong>Pickup:</strong> ${pickupDate}</p>
         <p><strong>Return:</strong> ${returnDate}</p>
+        <p><strong>Return:</strong> ${paymentMethod}</p>
         <p>Thank you for booking with Go Wheels!</p>
       `
     };
