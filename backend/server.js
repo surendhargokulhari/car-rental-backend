@@ -60,6 +60,10 @@ app.post('/api/book', async (req, res) => {
         <p><strong>Phone:</strong> ${phone}</p>
         <p><strong>Pickup:</strong> ${pickupDate}</p>
         <p><strong>Return:</strong> ${returnDate}</p>
+             <p>Explore cars now and continue your booking!</p>
+        <p><a href="https://surendhargokulhari.github.io/car-rental-main/car.html" target="_blank">Browse Available Cars</a></p>
+        <br>
+        <p>Best regards,<br><strong>Go Wheels Team</strong></p>
         <p>Thank you for booking with Go Wheels!</p>
       `
     };
