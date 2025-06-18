@@ -38,44 +38,38 @@ app.get('/', (req, res) => {
 });
 
 // Booking route
-// Route to handle homepage booking email only
-app.post('/api/send-booking-email', async (req, res) => {
+app.post('/api/book', async (req, res) => {
   try {
-    const { email, location, pickupDate, pickupTime, returnDate, returnTime } = req.body;
-
-    if (!email || !location || !pickupDate || !pickupTime || !returnDate || !returnTime) {
-      return res.status(400).json({ message: "All fields are required" });
+    const { name, email, carModel, phone, pickupDate, returnDate } = req.body;
+    if (!name || !email || !carModel || !phone) {
+      return res.status(400).json({ message: 'All fields are required' });
     }
 
+    const booking = new Booking({ name, email, carModel, phone, pickupDate, returnDate });
+    await booking.save();
+
+    // Email booking details
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: email,
-      subject: "Go Wheels - Booking Details",
+      subject: 'Booking Confirmation - Go Wheels',
       html: `
-        <h3>Search Confirmation 📝</h3>
-        <p>Hi,</p>
-        <p>Thanks for choosing <strong>Go Wheels</strong>.</p>
-        <p>Here are your booking search details:</p>
-        <ul>
-          <li><strong>Location:</strong> ${location}</li>
-          <li><strong>Pickup:</strong> ${pickupDate} at ${pickupTime}</li>
-          <li><strong>Return:</strong> ${returnDate} at ${returnTime}</li>
-        </ul>
-        <p>Explore cars now and continue your booking!</p>
-        <p><a href="https://surendhargokulhari.github.io/car-rental-main/car.html" target="_blank">Browse Available Cars</a></p>
-        <br>
-        <p>Best regards,<br><strong>Go Wheels Team</strong></p>
+        <h3>Booking Confirmed ✅</h3>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Car Model:</strong> ${carModel}</p>
+        <p><strong>Phone:</strong> ${phone}</p>
+        <p><strong>Pickup:</strong> ${pickupDate}</p>
+        <p><strong>Return:</strong> ${returnDate}</p>
+        <p>Thank you for booking with Go Wheels!</p>
       `
     };
 
     await transporter.sendMail(mailOptions);
-    res.status(200).json({ message: "Email sent successfully" });
-
+    res.status(200).json({ message: 'Booking confirmed & email sent' });
   } catch (err) {
-    console.error("❌ Email Error:", err.message);
-    res.status(500).json({ message: "Failed to send email" });
+    console.error("❌ Booking Error:", err.message);
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
-
 
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));

@@ -5,8 +5,6 @@ const bookingSchema = new mongoose.Schema({
   email: String,
   phone: String,
   carModel: String,
-  pickupDate: String,
-  returnDate: String,
   paymentMethod: String,
   createdAt: {
     type: Date,
