@@ -1,15 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const nodemailer = require('nodemailer');
 require('dotenv').config();
 const Booking = require('./models/Booking');
-const sgMail = require('@sendgrid/mail');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-
-// Configure SendGrid
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 // Middleware
 app.use(cors({
@@ -30,6 +27,15 @@ mongoose.connect(process.env.MONGO_URI, {
 .then(() => console.log("✅ MongoDB connected"))
 .catch(err => console.error("❌ MongoDB Error:", err.message));
 
+// Email transporter setup
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
+  }
+});
+
 // Test route
 app.get('/', (req, res) => {
   res.send("🚗 Car Rental Backend is running");
@@ -40,51 +46,52 @@ app.post('/api/book', async (req, res) => {
   try {
     const { name, email, carModel, phone, pickupDate, returnDate } = req.body;
 
+    // Validate required fields
     if (!name || !email || !carModel || !phone) {
       return res.status(400).json({ message: 'Name, email, car model, and phone are required.' });
     }
 
-    // Save booking
+    // Save booking to database
     const booking = new Booking({
       name,
       email,
       carModel,
       phone,
-      pickupDate: pickupDate || null,
-      returnDate: returnDate || null
+      pickupDate: pickupDate || null, // optional
+      returnDate: returnDate || null  // optional
     });
     await booking.save();
 
-    // Send email using SendGrid
+    // Attempt to send email without blocking booking
     try {
-      const msg = {
+      await transporter.sendMail({
+        from: process.env.EMAIL_USER,
         to: email,
-        from: process.env.EMAIL_FROM,
         subject: 'Booking Confirmation - Go Wheels',
         html: `
           <h3>Booking Confirmed ✅</h3>
           <p><strong>Name:</strong> ${name}</p>
           <p><strong>Car Model:</strong> ${carModel}</p>
           <p><strong>Phone:</strong> ${phone}</p>
-          <p><strong>Pickup Date:</strong> ${pickupDate || 'N/A'}</p>
-          <p><strong>Return Date:</strong> ${returnDate || 'N/A'}</p>
+          <p>Pickup Date: ${pickupDate || 'N/A'}</p>
+          <p>Return Date: ${returnDate || 'N/A'}</p>
           <p>Explore cars now and continue your booking!</p>
           <p><a href="https://surendhargokulhari.github.io/car-rental-main/car.html" target="_blank">Browse Available Cars</a></p>
           <br>
           <p>Best regards,<br><strong>Go Wheels Team</strong></p>
         `
-      };
-      await sgMail.send(msg);
-      console.log("✅ Booking email sent via SendGrid");
+      });
     } catch (emailErr) {
-      console.error("⚠️ SendGrid email failed:", emailErr.message);
+      console.error("⚠️ Email sending failed:", emailErr.message);
     }
 
-    res.status(200).json({ message: 'Booking confirmed & email attempted', booking });
+    res.status(200).json({ message: 'Booking confirmed (email attempt made)', booking });
+
   } catch (err) {
-    console.error("❌ Booking Error:", err);
+    console.error("❌ Booking Error:", err.message);
     res.status(500).json({ message: 'Internal server error', error: err.message });
   }
 });
 
+// Start server
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
