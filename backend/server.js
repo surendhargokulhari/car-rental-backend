@@ -2,12 +2,13 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
-const Booking = require('./models/Booking');
 require('dotenv').config();
+const Booking = require('./models/Booking');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Middleware
 app.use(cors({
   origin: [
     "https://surendhargokulhari.github.io",
@@ -18,12 +19,15 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Connect MongoDB
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("✅ MongoDB connected"))
-  .catch(err => console.error("❌ MongoDB Error:", err));
+// MongoDB Connection
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => console.log("✅ MongoDB connected"))
+.catch(err => console.error("❌ MongoDB Error:", err.message));
 
-// Email setup
+// Email transporter setup
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -41,36 +45,50 @@ app.get('/', (req, res) => {
 app.post('/api/book', async (req, res) => {
   try {
     const { name, email, carModel, phone, pickupDate, returnDate } = req.body;
+
+    // Validate required fields
     if (!name || !email || !carModel || !phone) {
-      return res.status(400).json({ message: 'All fields are required' });
+      return res.status(400).json({ message: 'Name, email, car model, and phone are required.' });
     }
 
-    const booking = new Booking({ name, email, carModel, phone, pickupDate, returnDate });
+    // Save booking to database
+    const booking = new Booking({
+      name,
+      email,
+      carModel,
+      phone,
+      pickupDate: pickupDate || null, // optional
+      returnDate: returnDate || null  // optional
+    });
     await booking.save();
 
-    // Email booking details
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: 'Booking Confirmation - Go Wheels',
-      html: `
-        <h3>Booking Confirmed ✅</h3>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Car Model:</strong> ${carModel}</p>
-        <p><strong>Phone:</strong> ${phone}</p>
-        <p>Explore cars now and continue your booking!</p>
-        <p><a href="https://surendhargokulhari.github.io/car-rental-main/car.html" target="_blank">Browse Available Cars</a></p>
-        <br>
-        <p>Best regards,<br><strong>Go Wheels Team</strong></p>
-        <p>Thank you for booking with Go Wheels!</p>
-      `
-    };
+    // Send email (wrapped in try/catch to avoid breaking booking if email fails)
+    try {
+      const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: email,
+        subject: 'Booking Confirmation - Go Wheels',
+        html: `
+          <h3>Booking Confirmed ✅</h3>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Car Model:</strong> ${carModel}</p>
+          <p><strong>Phone:</strong> ${phone}</p>
+          <p>Explore cars now and continue your booking!</p>
+          <p><a href="https://surendhargokulhari.github.io/car-rental-main/car.html" target="_blank">Browse Available Cars</a></p>
+          <br>
+          <p>Best regards,<br><strong>Go Wheels Team</strong></p>
+          <p>Thank you for booking with Go Wheels!</p>
+        `
+      };
+      await transporter.sendMail(mailOptions);
+    } catch(emailErr) {
+      console.error("⚠️ Email sending failed:", emailErr.message);
+    }
 
-    await transporter.sendMail(mailOptions);
-    res.status(200).json({ message: 'Booking confirmed & email sent' });
+    res.status(200).json({ message: 'Booking confirmed & email (attempted) sent', booking });
   } catch (err) {
-    console.error("❌ Booking Error:", err.message);
-    res.status(500).json({ message: 'Internal server error' });
+    console.error("❌ Booking Error:", err);
+    res.status(500).json({ message: 'Internal server error', error: err.message });
   }
 });
 
