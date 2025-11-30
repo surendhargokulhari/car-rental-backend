@@ -62,9 +62,9 @@ app.post('/api/book', async (req, res) => {
     });
     await booking.save();
 
-    // Send email (wrapped in try/catch to avoid breaking booking if email fails)
+    // Attempt to send email without blocking booking
     try {
-      const mailOptions = {
+      await transporter.sendMail({
         from: process.env.EMAIL_USER,
         to: email,
         subject: 'Booking Confirmation - Go Wheels',
@@ -73,23 +73,25 @@ app.post('/api/book', async (req, res) => {
           <p><strong>Name:</strong> ${name}</p>
           <p><strong>Car Model:</strong> ${carModel}</p>
           <p><strong>Phone:</strong> ${phone}</p>
+          <p>Pickup Date: ${pickupDate || 'N/A'}</p>
+          <p>Return Date: ${returnDate || 'N/A'}</p>
           <p>Explore cars now and continue your booking!</p>
           <p><a href="https://surendhargokulhari.github.io/car-rental-main/car.html" target="_blank">Browse Available Cars</a></p>
           <br>
           <p>Best regards,<br><strong>Go Wheels Team</strong></p>
-          <p>Thank you for booking with Go Wheels!</p>
         `
-      };
-      await transporter.sendMail(mailOptions);
-    } catch(emailErr) {
+      });
+    } catch (emailErr) {
       console.error("⚠️ Email sending failed:", emailErr.message);
     }
 
-    res.status(200).json({ message: 'Booking confirmed & email (attempted) sent', booking });
+    res.status(200).json({ message: 'Booking confirmed (email attempt made)', booking });
+
   } catch (err) {
-    console.error("❌ Booking Error:", err);
+    console.error("❌ Booking Error:", err.message);
     res.status(500).json({ message: 'Internal server error', error: err.message });
   }
 });
 
+// Start server
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
