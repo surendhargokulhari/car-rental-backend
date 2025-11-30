@@ -29,10 +29,12 @@ mongoose.connect(process.env.MONGO_URI, {
 
 // Email transporter setup
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true, // true for 465, false for other ports
   auth: {
     user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
+    pass: process.env.EMAIL_PASS // use Gmail App Password
   }
 });
 
@@ -51,20 +53,24 @@ app.post('/api/book', async (req, res) => {
       return res.status(400).json({ message: 'Name, email, car model, and phone are required.' });
     }
 
+    // Parse dates if provided
+    const pickup = pickupDate ? new Date(pickupDate) : null;
+    const ret = returnDate ? new Date(returnDate) : null;
+
     // Save booking to database
     const booking = new Booking({
       name,
       email,
       carModel,
       phone,
-      pickupDate: pickupDate || null, // optional
-      returnDate: returnDate || null  // optional
+      pickupDate: pickup,
+      returnDate: ret
     });
     await booking.save();
 
-    // Attempt to send email without blocking booking
+    // Send email (wrapped in try/catch so booking still works if email fails)
     try {
-      await transporter.sendMail({
+      const mailOptions = {
         from: process.env.EMAIL_USER,
         to: email,
         subject: 'Booking Confirmation - Go Wheels',
@@ -73,22 +79,24 @@ app.post('/api/book', async (req, res) => {
           <p><strong>Name:</strong> ${name}</p>
           <p><strong>Car Model:</strong> ${carModel}</p>
           <p><strong>Phone:</strong> ${phone}</p>
-          <p>Pickup Date: ${pickupDate || 'N/A'}</p>
-          <p>Return Date: ${returnDate || 'N/A'}</p>
+          <p><strong>Pickup Date:</strong> ${pickup ? pickup.toDateString() : 'N/A'}</p>
+          <p><strong>Return Date:</strong> ${ret ? ret.toDateString() : 'N/A'}</p>
           <p>Explore cars now and continue your booking!</p>
           <p><a href="https://surendhargokulhari.github.io/car-rental-main/car.html" target="_blank">Browse Available Cars</a></p>
           <br>
           <p>Best regards,<br><strong>Go Wheels Team</strong></p>
         `
-      });
+      };
+      await transporter.sendMail(mailOptions);
+      console.log("✅ Email sent successfully to", email);
     } catch (emailErr) {
-      console.error("⚠️ Email sending failed:", emailErr.message);
+      console.warn("⚠️ Email sending failed:", emailErr.message);
     }
 
-    res.status(200).json({ message: 'Booking confirmed (email attempt made)', booking });
+    res.status(200).json({ message: 'Booking confirmed (email attempted)', booking });
 
   } catch (err) {
-    console.error("❌ Booking Error:", err.message);
+    console.error("❌ Booking Error:", err);
     res.status(500).json({ message: 'Internal server error', error: err.message });
   }
 });
