@@ -1,105 +1,104 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const nodemailer = require('nodemailer');
-require('dotenv').config();
-const Booking = require('./models/Booking');
+// server.js
+require("dotenv").config();
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const nodemailer = require("nodemailer");
 
 const app = express();
-const PORT = process.env.PORT || 5000;
-
-// Middleware
-app.use(cors({
-  origin: [
-    "https://surendhargokulhari.github.io",
-    "https://surendhargokulhari.github.io/car-rental-main/"
-  ],
-  methods: ["GET", "POST"],
-  allowedHeaders: ["Content-Type"]
-}));
 app.use(express.json());
+app.use(cors());
 
-// MongoDB Connection
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log("✅ MongoDB connected"))
-.catch(err => console.error("❌ MongoDB Error:", err.message));
+// ------------------ MONGO CONNECTION ------------------
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("✅ MongoDB connected"))
+  .catch((err) => console.error("❌ MongoDB connection failed:", err));
 
-// Email transporter setup
+// ------------------ EMAIL TRANSPORTER (GMAIL) ------------------
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 465,
-  secure: true, // true for 465, false for other ports
+  secure: true,
   auth: {
     user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS // use Gmail App Password
+    pass: process.env.EMAIL_PASS,
+  },
+  connectionTimeout: 20000,
+});
+
+// Check Gmail Login
+transporter.verify((error) => {
+  if (error) {
+    console.log("❌ Gmail Login Failed:", error);
+  } else {
+    console.log("📨 Gmail Ready to Send Emails");
   }
 });
 
-// Test route
-app.get('/', (req, res) => {
-  res.send("🚗 Car Rental Backend is running");
+// ------------------ MONGODB BOOKING MODEL ------------------
+const bookingSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  car: String,
+  pickupDate: String,
+  returnDate: String,
+  price: Number,
 });
 
-// Booking route
-app.post('/api/book', async (req, res) => {
+const Booking = mongoose.model("Booking", bookingSchema);
+
+// ------------------ BOOKING API ------------------
+app.post("/api/book", async (req, res) => {
   try {
-    const { name, email, carModel, phone, pickupDate, returnDate } = req.body;
+    const { name, email, car, pickupDate, returnDate, price } = req.body;
 
-    // Validate required fields
-    if (!name || !email || !carModel || !phone) {
-      return res.status(400).json({ message: 'Name, email, car model, and phone are required.' });
-    }
-
-    // Parse dates if provided
-    const pickup = pickupDate ? new Date(pickupDate) : null;
-    const ret = returnDate ? new Date(returnDate) : null;
-
-    // Save booking to database
     const booking = new Booking({
       name,
       email,
-      carModel,
-      phone,
-      pickupDate: pickup,
-      returnDate: ret
+      car,
+      pickupDate,
+      returnDate,
+      price,
     });
+
     await booking.save();
 
-    // Send email (wrapped in try/catch so booking still works if email fails)
-    try {
-      const mailOptions = {
-        from: process.env.EMAIL_USER,
-        to: email,
-        subject: 'Booking Confirmation - Go Wheels',
-        html: `
-          <h3>Booking Confirmed ✅</h3>
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Car Model:</strong> ${carModel}</p>
-          <p><strong>Phone:</strong> ${phone}</p>
-          <p><strong>Pickup Date:</strong> ${pickup ? pickup.toDateString() : 'N/A'}</p>
-          <p><strong>Return Date:</strong> ${ret ? ret.toDateString() : 'N/A'}</p>
-          <p>Explore cars now and continue your booking!</p>
-          <p><a href="https://surendhargokulhari.github.io/car-rental-main/car.html" target="_blank">Browse Available Cars</a></p>
-          <br>
-          <p>Best regards,<br><strong>Go Wheels Team</strong></p>
-        `
-      };
-      await transporter.sendMail(mailOptions);
-      console.log("✅ Email sent successfully to", email);
-    } catch (emailErr) {
-      console.warn("⚠️ Email sending failed:", emailErr.message);
-    }
+    // ---------------- EMAIL CONTENT ----------------
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "🚗 Booking Confirmation - Go Wheels",
+      html: `
+        <h2>Booking Confirmed!</h2>
+        <p>Hi ${name},</p>
+        <p>Your booking is successfully confirmed.</p>
+        <h3>Booking Details:</h3>
+        <ul>
+          <li><strong>Car:</strong> ${car}</li>
+          <li><strong>Pickup Date:</strong> ${pickupDate}</li>
+          <li><strong>Return Date:</strong> ${returnDate}</li>
+          <li><strong>Total Price:</strong> ₹${price}</li>
+        </ul>
+        <p>Thank you for choosing Go Wheels! 🚗💨</p>
+      `,
+    };
 
-    res.status(200).json({ message: 'Booking confirmed (email attempted)', booking });
+    // Send Email
+    await transporter.sendMail(mailOptions);
 
+    res.json({ success: true, message: "Booking Successful & Email Sent" });
   } catch (err) {
     console.error("❌ Booking Error:", err);
-    res.status(500).json({ message: 'Internal server error', error: err.message });
+    res.status(500).json({ success: false, message: "Booking Failed" });
   }
 });
 
-// Start server
+// ------------------ HOME ROUTE ------------------
+app.get("/", (req, res) => {
+  res.send("Go Wheels Backend Running Successfully!");
+});
+
+// ------------------ START SERVER ------------------
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
