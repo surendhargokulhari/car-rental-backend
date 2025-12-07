@@ -1,4 +1,3 @@
-// server.js
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -9,9 +8,7 @@ const Booking = require('./models/Booking');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// ---------------------------
 // Middleware
-// ---------------------------
 app.use(cors({
   origin: [
     "https://surendhargokulhari.github.io",
@@ -22,16 +19,17 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// ---------------------------
-// MongoDB Connection
-// ---------------------------
+// ---------------------------------------------
+// ✅ UPDATED MongoDB Connection (no warnings)
+// ---------------------------------------------
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB connected"))
   .catch(err => console.error("❌ MongoDB Error:", err.message));
 
-// ---------------------------
-// SMTP Transporter (Gmail)
-// ---------------------------
+
+// ---------------------------------------------
+// 📧 UPDATED + FIXED SMTP TRANSPORTER
+// ---------------------------------------------
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -39,6 +37,10 @@ const transporter = nodemailer.createTransport({
     pass: process.env.EMAIL_PASS  // Gmail App Password
   }
 });
+
+// Debug logs to confirm .env loaded
+console.log("EMAIL_USER:", process.env.EMAIL_USER);
+console.log("EMAIL_PASS:", process.env.EMAIL_PASS ? "Loaded" : "Missing");
 
 // Verify SMTP connection
 transporter.verify((error, success) => {
@@ -49,21 +51,20 @@ transporter.verify((error, success) => {
   }
 });
 
-// ---------------------------
-// Test Route
-// ---------------------------
+
+// Test route
 app.get('/', (req, res) => {
   res.send("🚗 Car Rental Backend is running");
 });
 
-// ---------------------------
-// Booking Route
-// ---------------------------
+
+// --------------------------------------------------
+// 🚗 BOOKING ROUTE (Updated + Cleaned)
+// --------------------------------------------------
 app.post('/api/book', async (req, res) => {
   try {
     const { name, email, carModel, phone, pickupDate, returnDate } = req.body;
 
-    // Validation
     if (!name || !email || !carModel || !phone) {
       return res.status(400).json({ message: 'All fields are required.' });
     }
@@ -83,7 +84,10 @@ app.post('/api/book', async (req, res) => {
 
     await booking.save();
 
-    // Send booking confirmation email
+
+    // ---------------------------------------------
+    // 📧 SEND EMAIL
+    // ---------------------------------------------
     const mailOptions = {
       from: `"Go Wheels" <${process.env.EMAIL_USER}>`,
       to: email,
@@ -114,6 +118,7 @@ app.post('/api/book', async (req, res) => {
       console.log("⚠️ Email Sending Failed:", emailErr.message);
     }
 
+
     res.status(200).json({
       message: "Booking saved. Email sent (if SMTP allowed).",
       booking
@@ -125,7 +130,6 @@ app.post('/api/book', async (req, res) => {
   }
 });
 
-// ---------------------------
-// Start Server
-// ---------------------------
+
+// Start server
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
