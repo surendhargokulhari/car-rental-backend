@@ -19,74 +19,84 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Database
+// MongoDB Connection
 mongoose.connect(process.env.MONGO_URI)
-.then(() => console.log("MongoDB Connected"))
-.catch(err => console.log("MongoDB Error:", err.message));
+  .then(() => console.log("✅ MongoDB connected"))
+  .catch(err => console.error("❌ MongoDB Error:", err.message));
 
-// ✅ Gmail App Password Email Setup
+
+// -------------------------------
+// GMAIL APP PASSWORD TRANSPORTER
+// -------------------------------
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  service: "gmail",   // works better on Render
   auth: {
-    user: process.env.EMAIL_USER,     // Gmail address
-    pass: process.env.EMAIL_PASS      // Gmail App Password
+    user: process.env.EMAIL_USER,   // your Gmail
+    pass: process.env.EMAIL_PASS    // 16-digit App Password
   }
 });
 
 // Test route
-app.get("/", (req, res) => {
-  res.send("Car Rental Backend Running 🚗");
+app.get('/', (req, res) => {
+  res.send("🚗 Car Rental Backend is running");
 });
 
-// Booking Route
-app.post("/api/book", async (req, res) => {
+// Booking route
+app.post('/api/book', async (req, res) => {
   try {
     const { name, email, carModel, phone, pickupDate, returnDate } = req.body;
 
     if (!name || !email || !carModel || !phone) {
-      return res.status(400).json({ message: "Required fields missing" });
+      return res.status(400).json({ message: 'Name, email, car model, and phone are required.' });
     }
 
-    // Save booking to DB
+    const pickup = pickupDate ? new Date(pickupDate) : null;
+    const ret = returnDate ? new Date(returnDate) : null;
+
     const booking = new Booking({
       name,
       email,
       carModel,
       phone,
-      pickupDate,
-      returnDate
+      pickupDate: pickup,
+      returnDate: ret
     });
 
     await booking.save();
 
-    // Email Content
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: "Booking Confirmation - Go Wheels",
-      html: `
-        <h2>Booking Confirmed 🎉</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Car Model:</strong> ${carModel}</p>
-        <p><strong>Phone:</strong> ${phone}</p>
-        <p><strong>Pickup Date:</strong> ${pickupDate}</p>
-        <p><strong>Return Date:</strong> ${returnDate}</p>
-        <br>
-        <p>Thank you for choosing <strong>Go Wheels</strong> 🚗</p>
-      `
-    };
+    // Email
+    try {
+      await transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: email,
+        subject: 'Booking Confirmation - Go Wheels',
+        html: `
+          <h3>Booking Confirmed ✅</h3>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Car Model:</strong> ${carModel}</p>
+          <p><strong>Phone:</strong> ${phone}</p>
+          <p><strong>Pickup Date:</strong> ${pickup ? pickup.toDateString() : 'N/A'}</p>
+          <p><strong>Return Date:</strong> ${ret ? ret.toDateString() : 'N/A'}</p>
+          <br>
+          <p><a href="https://surendhargokulhari.github.io/car-rental-main/car.html" target="_blank">Browse Available Cars</a></p>
+          <br>
+          <p>Best regards,<br><strong>Go Wheels Team</strong></p>
+        `
+      });
 
-    // Send Email
-    await transporter.sendMail(mailOptions);
-    console.log("Email Sent Successfully ✔️");
+      console.log("✅ Email sent to:", email);
 
-    res.status(200).json({ message: "Booking Confirmed & Email Sent", booking });
+    } catch (emailErr) {
+      console.warn("⚠️ Email failed:", emailErr.message);
+    }
+
+    res.status(200).json({ message: 'Booking confirmed', booking });
 
   } catch (err) {
-    console.log("Booking Error:", err);
-    res.status(500).json({ message: "Server Error", error: err.message });
+    console.error("❌ Booking Error:", err);
+    res.status(500).json({ message: 'Internal server error', error: err.message });
   }
 });
 
-// Start Server
-app.listen(PORT, () => console.log(`Server running on ${PORT}`));
+// Start server
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
