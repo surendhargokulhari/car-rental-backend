@@ -19,117 +19,74 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// ---------------------------------------------
-// ✅ UPDATED MongoDB Connection (no warnings)
-// ---------------------------------------------
+// Database
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("✅ MongoDB connected"))
-  .catch(err => console.error("❌ MongoDB Error:", err.message));
+.then(() => console.log("MongoDB Connected"))
+.catch(err => console.log("MongoDB Error:", err.message));
 
-
-// ---------------------------------------------
-// 📧 UPDATED + FIXED SMTP TRANSPORTER
-// ---------------------------------------------
+// ✅ Gmail App Password Email Setup
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS  // Gmail App Password
+    user: process.env.EMAIL_USER,     // Gmail address
+    pass: process.env.EMAIL_PASS      // Gmail App Password
   }
 });
-
-// Debug logs to confirm .env loaded
-console.log("EMAIL_USER:", process.env.EMAIL_USER);
-console.log("EMAIL_PASS:", process.env.EMAIL_PASS ? "Loaded" : "Missing");
-
-// Verify SMTP connection
-transporter.verify((error, success) => {
-  if (error) {
-    console.log("❌ SMTP ERROR:", error);
-  } else {
-    console.log("📧 SMTP Server is Ready to Send Emails");
-  }
-});
-
 
 // Test route
-app.get('/', (req, res) => {
-  res.send("🚗 Car Rental Backend is running");
+app.get("/", (req, res) => {
+  res.send("Car Rental Backend Running 🚗");
 });
 
-
-// --------------------------------------------------
-// 🚗 BOOKING ROUTE (Updated + Cleaned)
-// --------------------------------------------------
-app.post('/api/book', async (req, res) => {
+// Booking Route
+app.post("/api/book", async (req, res) => {
   try {
     const { name, email, carModel, phone, pickupDate, returnDate } = req.body;
 
     if (!name || !email || !carModel || !phone) {
-      return res.status(400).json({ message: 'All fields are required.' });
+      return res.status(400).json({ message: "Required fields missing" });
     }
 
-    const pickup = pickupDate ? new Date(pickupDate) : null;
-    const ret = returnDate ? new Date(returnDate) : null;
-
-    // Save booking to database
+    // Save booking to DB
     const booking = new Booking({
       name,
       email,
       carModel,
       phone,
-      pickupDate: pickup,
-      returnDate: ret
+      pickupDate,
+      returnDate
     });
 
     await booking.save();
 
-
-    // ---------------------------------------------
-    // 📧 SEND EMAIL
-    // ---------------------------------------------
+    // Email Content
     const mailOptions = {
-      from: `"Go Wheels" <${process.env.EMAIL_USER}>`,
+      from: process.env.EMAIL_USER,
       to: email,
       subject: "Booking Confirmation - Go Wheels",
       html: `
-        <h2>Booking Confirmed! 🚗</h2>
-
+        <h2>Booking Confirmed 🎉</h2>
         <p><strong>Name:</strong> ${name}</p>
         <p><strong>Car Model:</strong> ${carModel}</p>
         <p><strong>Phone:</strong> ${phone}</p>
-        <p><strong>Pickup Date:</strong> ${pickup ? pickup.toDateString() : 'N/A'}</p>
-        <p><strong>Return Date:</strong> ${ret ? ret.toDateString() : 'N/A'}</p>
-
-        <p>You can browse available cars here:</p>
-        <a href="https://surendhargokulhari.github.io/car-rental-main/car.html" target="_blank">
-          Browse Cars
-        </a>
-
-        <br><br>
-        <p>Thank you,<br><strong>Go Wheels Team</strong></p>
+        <p><strong>Pickup Date:</strong> ${pickupDate}</p>
+        <p><strong>Return Date:</strong> ${returnDate}</p>
+        <br>
+        <p>Thank you for choosing <strong>Go Wheels</strong> 🚗</p>
       `
     };
 
-    try {
-      await transporter.sendMail(mailOptions);
-      console.log("📧 Email sent to:", email);
-    } catch (emailErr) {
-      console.log("⚠️ Email Sending Failed:", emailErr.message);
-    }
+    // Send Email
+    await transporter.sendMail(mailOptions);
+    console.log("Email Sent Successfully ✔️");
 
-
-    res.status(200).json({
-      message: "Booking saved. Email sent (if SMTP allowed).",
-      booking
-    });
+    res.status(200).json({ message: "Booking Confirmed & Email Sent", booking });
 
   } catch (err) {
-    console.error("❌ Booking Error:", err);
-    res.status(500).json({ message: "Internal server error", error: err.message });
+    console.log("Booking Error:", err);
+    res.status(500).json({ message: "Server Error", error: err.message });
   }
 });
 
-
-// Start server
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+// Start Server
+app.listen(PORT, () => console.log(`Server running on ${PORT}`));
