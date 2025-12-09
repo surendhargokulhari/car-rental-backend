@@ -27,7 +27,10 @@ app.use(express.json());
 // -------------------------------
 // MONGODB CONNECTION
 // -------------------------------
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
   .then(() => console.log("✅ MongoDB connected"))
   .catch(err => console.error("❌ MongoDB Error:", err.message));
 
@@ -37,8 +40,8 @@ mongoose.connect(process.env.MONGO_URI)
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: process.env.EMAIL_USER,   // Gmail address
-    pass: process.env.EMAIL_PASS    // Gmail App Password (16-digit)
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
   }
 });
 
@@ -95,7 +98,7 @@ app.post('/api/book', async (req, res) => {
         html: `
           <h2>Booking Confirmed! ✅</h2>
           <p>Thank you for booking with <strong>Go Wheels</strong>.</p>
-          
+
           <h3>📄 Booking Details</h3>
           <p><strong>Name:</strong> ${name}</p>
           <p><strong>Car Model:</strong> ${carModel}</p>
