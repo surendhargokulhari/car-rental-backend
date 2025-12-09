@@ -18,9 +18,7 @@ app.use(cors({
   origin: [
     "https://surendhargokulhari.github.io",
     "https://surendhargokulhari.github.io/car-rental-main"
-  ],
-  methods: ["GET", "POST"],
-  allowedHeaders: ["Content-Type"]
+  ]
 }));
 app.use(express.json());
 
@@ -56,7 +54,7 @@ app.post('/api/book', async (req, res) => {
   try {
     const { name, email, carModel, phone, pickupDate, returnDate } = req.body;
 
-    // Basic Validation
+    // Validation
     if (!name || !email || !carModel || !phone) {
       return res.status(400).json({ message: 'Name, email, car model, and phone are required.' });
     }
@@ -68,35 +66,31 @@ app.post('/api/book', async (req, res) => {
       return res.status(400).json({ message: "Return date must be after pickup date." });
     }
 
-    // Create Booking
+    // Save booking
     const booking = new Booking({ name, email, carModel, phone, pickupDate: pickup, returnDate: ret });
     await booking.save();
 
-    // Send Confirmation Email
+    // Send confirmation email
     try {
       await transporter.sendMail({
         from: process.env.EMAIL_USER,
         to: email,
         subject: 'Your Booking Is Confirmed - Go Wheels',
         html: `
-          <h2>Booking Confirmed! ✅</h2>
+          <h2>Booking Confirmed ✅</h2>
           <p>Thank you for booking with <strong>Go Wheels</strong>.</p>
-          <h3>📄 Booking Details</h3>
           <p><strong>Name:</strong> ${name}</p>
           <p><strong>Car Model:</strong> ${carModel}</p>
           <p><strong>Phone:</strong> ${phone}</p>
           <p><strong>Pickup Date:</strong> ${pickup ? pickup.toDateString() : 'N/A'}</p>
           <p><strong>Return Date:</strong> ${ret ? ret.toDateString() : 'N/A'}</p>
-          <br>
-          <p>Check available cars here:</p>
-          <a href="https://surendhargokulhari.github.io/car-rental-main/car.html" target="_blank">View Cars 🚘</a>
-          <br><br>
+          <p>Check available cars: <a href="https://surendhargokulhari.github.io/car-rental-main/car.html" target="_blank">View Cars 🚘</a></p>
           <p>Best Regards,<br><strong>Go Wheels Team</strong></p>
         `
       });
       console.log("📧 Email sent to:", email);
-    } catch (emailErr) {
-      console.warn("⚠ Email failed:", emailErr.message);
+    } catch (err) {
+      console.warn("⚠ Email failed:", err.message);
     }
 
     res.status(200).json({ message: 'Booking confirmed', booking });
