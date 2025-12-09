@@ -8,6 +8,9 @@ const Booking = require('./models/Booking');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// -------------------------------
+// CORS
+// -------------------------------
 app.use(cors({
   origin: [
     "https://surendhargokulhari.github.io",
@@ -16,31 +19,37 @@ app.use(cors({
   methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type"]
 }));
+
 app.use(express.json());
 
-// MongoDB Connection
+// -------------------------------
+// MONGODB CONNECTION
+// -------------------------------
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB connected"))
   .catch(err => console.error("❌ MongoDB Error:", err.message));
 
-
 // -------------------------------
-// GMAIL APP PASSWORD TRANSPORTER
+// NODEMAILER (GMAIL)
 // -------------------------------
 const transporter = nodemailer.createTransport({
-  service: "gmail",   // works better on Render
+  service: "gmail",
   auth: {
-    user: process.env.EMAIL_USER,   // your Gmail
-    pass: process.env.EMAIL_PASS    // 16-digit App Password
+    user: process.env.EMAIL_USER,   // Gmail address
+    pass: process.env.EMAIL_PASS    // Gmail App Password (16-digit)
   }
 });
 
-// Test route
+// -------------------------------
+// DEFAULT TEST ROUTE
+// -------------------------------
 app.get('/', (req, res) => {
   res.send("🚗 Car Rental Backend is running");
 });
 
-// Booking route
+// -------------------------------
+// BOOKING ROUTE
+// -------------------------------
 app.post('/api/book', async (req, res) => {
   try {
     const { name, email, carModel, phone, pickupDate, returnDate } = req.body;
@@ -63,30 +72,39 @@ app.post('/api/book', async (req, res) => {
 
     await booking.save();
 
-    // Email
+    // -------------------------------
+    // SEND CONFIRMATION EMAIL
+    // -------------------------------
     try {
       await transporter.sendMail({
         from: process.env.EMAIL_USER,
         to: email,
-        subject: 'Booking Confirmation - Go Wheels',
+        subject: 'Your Booking Is Confirmed - Go Wheels',
         html: `
-          <h3>Booking Confirmed ✅</h3>
+          <h2>Booking Confirmed! ✅</h2>
+          <p>Thank you for booking with <strong>Go Wheels</strong>.</p>
+          
+          <h3>📄 Booking Details</h3>
           <p><strong>Name:</strong> ${name}</p>
           <p><strong>Car Model:</strong> ${carModel}</p>
           <p><strong>Phone:</strong> ${phone}</p>
           <p><strong>Pickup Date:</strong> ${pickup ? pickup.toDateString() : 'N/A'}</p>
           <p><strong>Return Date:</strong> ${ret ? ret.toDateString() : 'N/A'}</p>
+
           <br>
-          <p><a href="https://surendhargokulhari.github.io/car-rental-main/car.html" target="_blank">Browse Available Cars</a></p>
-          <br>
-          <p>Best regards,<br><strong>Go Wheels Team</strong></p>
+          <p>You can check available cars here:</p>
+          <a href="https://surendhargokulhari.github.io/car-rental-main/car.html" target="_blank">
+            View Cars 🚘
+          </a>
+
+          <br><br>
+          <p>Best Regards,<br><strong>Go Wheels Team</strong></p>
         `
       });
 
-      console.log("✅ Email sent to:", email);
-
+      console.log("📧 Email sent to:", email);
     } catch (emailErr) {
-      console.warn("⚠️ Email failed:", emailErr.message);
+      console.warn("⚠ Email failed:", emailErr.message);
     }
 
     res.status(200).json({ message: 'Booking confirmed', booking });
@@ -97,5 +115,7 @@ app.post('/api/book', async (req, res) => {
   }
 });
 
-// Start server
+// -------------------------------
+// START SERVER
+// -------------------------------
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
