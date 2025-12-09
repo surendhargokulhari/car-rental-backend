@@ -35,10 +35,21 @@ mongoose.connect(process.env.MONGO_URI)
 // NODEMAILER SETUP
 // -------------------------------
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtp.gmail.com",
+  port: 465,        // SSL port
+  secure: true,     // use SSL
   auth: {
     user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
+    pass: process.env.EMAIL_PASS // must be Gmail App Password
+  }
+});
+
+// Verify SMTP connection at startup
+transporter.verify((error, success) => {
+  if (error) {
+    console.error("⚠ SMTP connection failed:", error);
+  } else {
+    console.log("✅ SMTP ready to send messages");
   }
 });
 
