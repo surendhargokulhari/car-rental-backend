@@ -1,3 +1,6 @@
+// -------------------------------
+// IMPORTS & CONFIG
+// -------------------------------
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -9,17 +12,16 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // -------------------------------
-// CORS
+// MIDDLEWARE
 // -------------------------------
 app.use(cors({
   origin: [
     "https://surendhargokulhari.github.io",
-    "https://surendhargokulhari.github.io/car-rental-main/"
+    "https://surendhargokulhari.github.io/car-rental-main"
   ],
   methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type"]
 }));
-
 app.use(express.json());
 
 // -------------------------------
@@ -30,7 +32,7 @@ mongoose.connect(process.env.MONGO_URI)
   .catch(err => console.error("❌ MongoDB Error:", err.message));
 
 // -------------------------------
-// NODEMAILER (GMAIL)
+// NODEMAILER SETUP
 // -------------------------------
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -41,7 +43,7 @@ const transporter = nodemailer.createTransport({
 });
 
 // -------------------------------
-// DEFAULT TEST ROUTE
+// DEFAULT ROUTE
 // -------------------------------
 app.get('/', (req, res) => {
   res.send("🚗 Car Rental Backend is running");
@@ -54,6 +56,9 @@ app.post('/api/book', async (req, res) => {
   try {
     const { name, email, carModel, phone, pickupDate, returnDate } = req.body;
 
+    // -------------------------------
+    // BASIC VALIDATION
+    // -------------------------------
     if (!name || !email || !carModel || !phone) {
       return res.status(400).json({ message: 'Name, email, car model, and phone are required.' });
     }
@@ -61,6 +66,13 @@ app.post('/api/book', async (req, res) => {
     const pickup = pickupDate ? new Date(pickupDate) : null;
     const ret = returnDate ? new Date(returnDate) : null;
 
+    if (pickup && ret && pickup > ret) {
+      return res.status(400).json({ message: "Return date must be after pickup date." });
+    }
+
+    // -------------------------------
+    // CREATE BOOKING
+    // -------------------------------
     const booking = new Booking({
       name,
       email,
@@ -92,7 +104,7 @@ app.post('/api/book', async (req, res) => {
           <p><strong>Return Date:</strong> ${ret ? ret.toDateString() : 'N/A'}</p>
 
           <br>
-          <p>You can check available cars here:</p>
+          <p>Check available cars here:</p>
           <a href="https://surendhargokulhari.github.io/car-rental-main/car.html" target="_blank">
             View Cars 🚘
           </a>
