@@ -27,12 +27,9 @@ app.use(express.json());
 // -------------------------------
 // MONGODB CONNECTION
 // -------------------------------
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log("✅ MongoDB connected"))
-.catch(err => console.error("❌ MongoDB Error:", err.message));
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("✅ MongoDB connected"))
+  .catch(err => console.error("❌ MongoDB Error:", err.message));
 
 // -------------------------------
 // NODEMAILER SETUP
