@@ -31,8 +31,8 @@ mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
-  .then(() => console.log("✅ MongoDB connected"))
-  .catch(err => console.error("❌ MongoDB Error:", err.message));
+.then(() => console.log("✅ MongoDB connected"))
+.catch(err => console.error("❌ MongoDB Error:", err.message));
 
 // -------------------------------
 // NODEMAILER SETUP
@@ -59,9 +59,7 @@ app.post('/api/book', async (req, res) => {
   try {
     const { name, email, carModel, phone, pickupDate, returnDate } = req.body;
 
-    // -------------------------------
-    // BASIC VALIDATION
-    // -------------------------------
+    // Basic Validation
     if (!name || !email || !carModel || !phone) {
       return res.status(400).json({ message: 'Name, email, car model, and phone are required.' });
     }
@@ -73,23 +71,11 @@ app.post('/api/book', async (req, res) => {
       return res.status(400).json({ message: "Return date must be after pickup date." });
     }
 
-    // -------------------------------
-    // CREATE BOOKING
-    // -------------------------------
-    const booking = new Booking({
-      name,
-      email,
-      carModel,
-      phone,
-      pickupDate: pickup,
-      returnDate: ret
-    });
-
+    // Create Booking
+    const booking = new Booking({ name, email, carModel, phone, pickupDate: pickup, returnDate: ret });
     await booking.save();
 
-    // -------------------------------
-    // SEND CONFIRMATION EMAIL
-    // -------------------------------
+    // Send Confirmation Email
     try {
       await transporter.sendMail({
         from: process.env.EMAIL_USER,
@@ -98,25 +84,19 @@ app.post('/api/book', async (req, res) => {
         html: `
           <h2>Booking Confirmed! ✅</h2>
           <p>Thank you for booking with <strong>Go Wheels</strong>.</p>
-
           <h3>📄 Booking Details</h3>
           <p><strong>Name:</strong> ${name}</p>
           <p><strong>Car Model:</strong> ${carModel}</p>
           <p><strong>Phone:</strong> ${phone}</p>
           <p><strong>Pickup Date:</strong> ${pickup ? pickup.toDateString() : 'N/A'}</p>
           <p><strong>Return Date:</strong> ${ret ? ret.toDateString() : 'N/A'}</p>
-
           <br>
           <p>Check available cars here:</p>
-          <a href="https://surendhargokulhari.github.io/car-rental-main/car.html" target="_blank">
-            View Cars 🚘
-          </a>
-
+          <a href="https://surendhargokulhari.github.io/car-rental-main/car.html" target="_blank">View Cars 🚘</a>
           <br><br>
           <p>Best Regards,<br><strong>Go Wheels Team</strong></p>
         `
       });
-
       console.log("📧 Email sent to:", email);
     } catch (emailErr) {
       console.warn("⚠ Email failed:", emailErr.message);
