@@ -14,12 +14,14 @@ const PORT = process.env.PORT || 5000;
 // -------------------------------
 // MIDDLEWARE
 // -------------------------------
-app.use(cors({
-  origin: [
-    "https://surendhargokulhari.github.io",
-    "https://surendhargokulhari.github.io/car-rental-main"
-  ]
-}));
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(',')
+  : [
+      "https://surendhargokulhari.github.io",
+      "https://surendhargokulhari.github.io/car-rental-main"
+    ];
+
+app.use(cors({ origin: allowedOrigins }));
 app.use(express.json());
 
 // -------------------------------
@@ -54,13 +56,19 @@ app.post('/api/book', async (req, res) => {
   try {
     const { name, email, carModel, phone, pickupDate, returnDate } = req.body;
 
-    // Validation
+    // Required fields validation
     if (!name || !email || !carModel || !phone) {
       return res.status(400).json({ message: 'Name, email, car model, and phone are required.' });
     }
 
-    const pickup = pickupDate ? new Date(pickupDate) : null;
+    const today = new Date();
+    const pickup = pickupDate ? new Date(pickupDate) : today;
     const ret = returnDate ? new Date(returnDate) : null;
+
+    // Date validations
+    if (pickup < today.setHours(0,0,0,0)) {
+      return res.status(400).json({ message: "Pickup date cannot be in the past." });
+    }
 
     if (pickup && ret && pickup > ret) {
       return res.status(400).json({ message: "Return date must be after pickup date." });
@@ -82,7 +90,7 @@ app.post('/api/book', async (req, res) => {
           <p><strong>Name:</strong> ${name}</p>
           <p><strong>Car Model:</strong> ${carModel}</p>
           <p><strong>Phone:</strong> ${phone}</p>
-          <p><strong>Pickup Date:</strong> ${pickup ? pickup.toDateString() : 'N/A'}</p>
+          <p><strong>Pickup Date:</strong> ${pickup.toDateString()}</p>
           <p><strong>Return Date:</strong> ${ret ? ret.toDateString() : 'N/A'}</p>
           <p>Check available cars: <a href="https://surendhargokulhari.github.io/car-rental-main/car.html" target="_blank">View Cars 🚘</a></p>
           <p>Best Regards,<br><strong>Go Wheels Team</strong></p>
